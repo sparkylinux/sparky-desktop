@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=LXQt
+Comment=LXQt Desktop Environment 
+Exec=remsu /usr/bin/sparky-desktop lxqt
+Icon=/usr/share/icons/sparky/desktops/lxqt.png
+Terminal=false
+MultipleArgs=false
+Type=Application
+Categories=System;

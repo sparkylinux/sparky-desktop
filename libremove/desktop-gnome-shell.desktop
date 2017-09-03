@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=GNOME Shell
+Comment=GNOME Desktop Environment 
+Exec=remsu /usr/bin/sparky-desktop-del gnomeshell
+Icon=/usr/share/icons/sparky/desktops/gnome.png
+Terminal=false
+MultipleArgs=false
+Type=Application
+Categories=System;

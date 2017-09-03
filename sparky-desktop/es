@@ -1,0 +1,29 @@
+# Spanish localization file for Sparky Desktop Installer
+# Copyright 2016 Miguel "DellDor" Dell'Uomini <delldor@gmail.com> 2016/04/12
+# Under the GNU GPL v3
+# Last update 2017/08/21 by pavroo
+
+LOCAL1="Nombre"
+LOCAL2="Descripción"
+LOCAL3="Salir"
+LOCAL4="¡Falló la prueba de conexión a internet!\n\nProbablemente NO tenga conexión a internet o el servidor del repositorio principal está caído.\n\nRevise y pruebe de nuevo."
+LOCAL5="Se instalá el nuevo escritorio que ha sido seleccionado y se reemplazarán las configuraciones antiguas del escritorio en el directorio Home, sí existían.\n\nTambién se podrán hacer pequeños cambios en las configuraciones de escritorio que ya estaba instalado."
+LOCAL6="Instalador de Escritorio"
+LOCAL7="¡Instalación detenida!\n\nHaga click en OK para salir."
+LOCAL8="Seleccionar usuario"
+LOCAL9="Seleccionar usuario para copiar los nuevos archivos de configuración al directorio Home"
+LOCAL10="Sí todo marchó adecuadamente, el nuevo escritorio ha sido instalado y configurado.\n\nCierre la sesión y ábrala en el nuevo escritorio para que tengan efecto los cambios."
+LOCAL11="Antes de comenzar, asegúrese que la lista de paquetes está actualizada.\n\n¿Desea instalar ahora?"
+LOCAL12="El directorio Home del usuario NO exite, en consecuencia, los archivos de configuración del nuevo escritorio NO serán copiados..\n\nSaliendo ahora..."
+LOCAL13="¡Algo anda mal!\n\nNO se pueden encontrar los archivos del nuevo escritorio, por tanto las configuraciones de usuario NO serán copiadas al directorio Home.\n\nSaliendo..."
+LOCAL14="It can not be installed on your version of Debian/Sparky.\n\nExiting..."
+LOCAL15="Desktop Remover"
+LOCAL16="This lets you remove a desktop you do NOT need any more.\n\nWarning! removing a desktop can destroy your system.\n\nWould you like to remove now?"
+LOCAL17="Nothing removed.\n\nClick OK to quit."
+LOCAL18="You are running"
+LOCAL19="so it CAN NOT be removed now."
+LOCAL20="Re-login to a different desktop and try again."
+LOCAL21="The desktop metapackage is NOT installed so CAN NOT be removed.\n\nClick OK to quit."
+LOCAL22="It will remove a desktop you have choosen and you do not need it any more.\n\nAre you sure?"
+LOCAL23="If everything went well, your desktop has been removed from your system."
+LOCAL24="This desktop is a 3rd party application and NOT maintained by Debian or Sparky developers, so it is possible that it will be NOT working properly."

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Pantheon
+Comment=Pantheon Desktop Environment
+Exec=remsu /usr/bin/sparky-desktop-del pantheon
+Icon=/usr/share/icons/sparky/desktops/elementary.png
+Terminal=false
+MultipleArgs=false
+Type=Application
+Categories=System;

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=LXDE
+Comment=LXDE Desktop Environment 
+Exec=remsu /usr/bin/sparky-desktop-del lxde
+Icon=/usr/share/icons/sparky/desktops/lxde.png
+Terminal=false
+MultipleArgs=false
+Type=Application
+Categories=System;

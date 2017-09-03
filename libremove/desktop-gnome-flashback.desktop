@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=GNOME Flashback
+Comment=GNOME Flashback session of the GNOME Desktop Environment 
+Exec=remsu /usr/bin/sparky-desktop-del gnomeflashback
+Icon=/usr/share/icons/sparky/desktops/gnome1.png
+Terminal=false
+MultipleArgs=false
+Type=Application
+Categories=System;

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Lumina
+Comment=Lumina Desktop
+Exec=remsu /usr/bin/sparky-desktop lumina
+Icon=/usr/share/icons/sparky/desktops/lumina.png
+Terminal=false
+MultipleArgs=false
+Type=Application
+Categories=System;

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=IceWM
+Comment=IceWM Window Manager
+Exec=remsu /usr/bin/sparky-desktop-del icewm
+Icon=/usr/share/icons/sparky/desktops/icewm.png
+Terminal=false
+MultipleArgs=false
+Type=Application
+Categories=System;

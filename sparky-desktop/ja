@@ -1,0 +1,30 @@
+# English localization file for Sparky Desktop Installer
+# Copyright 2016 Pawel "pavroo" Pijanowski <pavroo@onet.eu> 2016/03/21
+# Under the GNU GPL v2
+# Last update 2017/08/21 by pavroo
+# Translated to Japanese by BALLOON a.k.a. Fu-sen.
+
+LOCAL1="名前"
+LOCAL2="説明"
+LOCAL3="終了"
+LOCAL4="インターネット接続テストに失敗しました！\n\nおそらくインターネットに接続されていないか、メインのリポジトリサーバーがダウンしています。\n\n確認の上、もう一度試して下さい。"
+LOCAL5="選択した新しいデスクトップがインストールされ、すでに存在する場合はホームフォルダのデスクトップの古い設定が置き換えられます。\n\nまた、すでにインストールされているデスクトップ設定に小さな変更を加えることもできます。"
+LOCAL6="デスクトップインストール"
+LOCAL7="インストールは停止しました！\n\nOK をクリックして終了します。"
+LOCAL8="ユーザーの選択"
+LOCAL9="新しいデスクトップ構成ファイルをホームフォルダにコピーするユーザーを選択して下さい"
+LOCAL10="すべてがうまくいけば、新しいデスクトップがインストールされ、設定されています。\n\nログアウトして新しいデスクトップにログインすると、影響があります。"
+LOCAL11="開始する前に、パッケージリストが最新であることを確認してください。\n\n今すぐインストールしますか？"
+LOCAL12="ユーザーのホームフォルダが存在しないため、新しいデスクトップ設定ファイルはコピーされません。\n\n終了します..."
+LOCAL13="何か問題があります！\n\n新しいデスクトップファイルを見つけることができないため、ユーザー設定はホームディレクトリにコピーされません。\n\n終了します..."
+LOCAL14="この Debian/Sparky のバージョンではインストールできません。\n\n終了します..."
+LOCAL15="Desktop Remover"
+LOCAL16="This lets you remove a desktop you do NOT need any more.\n\nWarning! removing a desktop can destroy your system.\n\nWould you like to remove now?"
+LOCAL17="Nothing removed.\n\nClick OK to quit."
+LOCAL18="You are running"
+LOCAL19="so it CAN NOT be removed now."
+LOCAL20="Re-login to a different desktop and try again."
+LOCAL21="The desktop metapackage is NOT installed so CAN NOT be removed.\n\nClick OK to quit."
+LOCAL22="It will remove a desktop you have choosen and you do not need it any more.\n\nAre you sure?"
+LOCAL23="If everything went well, your desktop has been removed from your system."
+LOCAL24="This desktop is a 3rd party application and NOT maintained by Debian or Sparky developers, so it is possible that it will be NOT working properly."

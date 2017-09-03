@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Cinnamon
+Comment=Cinnamon Desktop Environment 
+Exec=remsu /usr/bin/sparky-desktop-del cinnamon
+Icon=/usr/share/icons/sparky/desktops/mint.png
+Terminal=false
+MultipleArgs=false
+Type=Application
+Categories=System;

@@ -1,0 +1,29 @@
+﻿# Fichier de localisation française de Sparky Desktop Installer
+# Copyright 2016 hiver <hiver@club-internet.fr> 2016/05/12
+# Sous licence GNU GPL v2
+# Last update 2017/08/21 by pavroo
+
+LOCAL1="Nom"
+LOCAL2="Description"
+LOCAL3="Quitter"
+LOCAL4="Échec du test de la connexion internet!\n\nVous n'êtes probablement pas connecté à Internet ou bien le serveur du projet est hors-service.\n\nVérifiez et essayez à nouveau."
+LOCAL5="Ceci va installer le nouveau bureau que vous avez choisi et remplacer l'ancien paramétrage du bureau dans votre répertoire personnel s'il existe déjà.\n\nIl peut aussi faire quelques ajustements dans le paramétrage du bureau que vous avez déjà installé."
+LOCAL6="Installateur de bureau"
+LOCAL7="Installation arrêtée!\n\nCliquez sur OK pour quitter."
+LOCAL8="Choisissez l'utilisateur"
+LOCAL9="Choisissez l'utilisateur dans le dossier duquel vous voulez les nouveaux fichiers de configuration du bureau"
+LOCAL10="Si tout s'est bien passé votre nouveau bureau a été installé et configuré.\n\nQuittez la session et ouvrez en une nouvelle pour prendre en compte le nouveau bureau."
+LOCAL11="Vérifiez que la liste des paquets est à jour avant de commencer.\n\nVoulez-vous installer maintenant?"
+LOCAL12="Le dossier personnel de l'utilisateur n'existe pas, donc les fichiers de configuration du nouveau bureau ne seront pas copiés.\n\nSortie..."
+LOCAL13="Il y a un problème!\n\nJe ne peux trouver les fichiers du nouveau bureau, donc le paramétrage personnel ne pourra être copié dans votre répertoire personnel.\n\nSortie..."
+LOCAL14="It can not be installed on your version of Debian/Sparky.\n\nExiting..."
+LOCAL15="Desktop Remover"
+LOCAL16="This lets you remove a desktop you do NOT need any more.\n\nWarning! removing a desktop can destroy your system.\n\nWould you like to remove now?"
+LOCAL17="Nothing removed.\n\nClick OK to quit."
+LOCAL18="You are running"
+LOCAL19="so it CAN NOT be removed now."
+LOCAL20="Re-login to a different desktop and try again."
+LOCAL21="The desktop metapackage is NOT installed so CAN NOT be removed.\n\nClick OK to quit."
+LOCAL22="It will remove a desktop you have choosen and you do not need it any more.\n\nAre you sure?"
+LOCAL23="If everything went well, your desktop has been removed from your system."
+LOCAL24="This desktop is a 3rd party application and NOT maintained by Debian or Sparky developers, so it is possible that it will be NOT working properly."

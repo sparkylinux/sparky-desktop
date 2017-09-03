@@ -1,0 +1,275 @@
+#!/bin/bash
+
+# last update 2017/04/30 by pavroo
+
+# get default's locale file
+DEFLOCDIR="/usr/share/sparky/sparky-desktop"
+if [ "`cat /etc/default/locale | grep es_AR`" != "" ]; then
+. $DEFLOCDIR/es
+elif [ "`cat /etc/default/locale | grep fr_FR`" != "" ]; then
+. $DEFLOCDIR/fr
+elif [ "`cat /etc/default/locale | grep it_IT`" != "" ]; then
+. $DEFLOCDIR/it
+elif [ "`cat /etc/default/locale | grep ja_JP`" != "" ]; then
+. $DEFLOCDIR/ja
+elif [ "`cat /etc/default/locale | grep pl_PL`" != "" ]; then
+. $DEFLOCDIR/pl
+elif [ "`cat /etc/default/locale | grep pt_BR`" != "" ]; then
+. $DEFLOCDIR/pt_BR
+elif [ "`cat /etc/default/locale | grep pt_PT`" != "" ]; then
+. $DEFLOCDIR/pt_PT
+else
+. $DEFLOCDIR/en
+fi
+
+testroot="`whoami`"
+
+if [ "$testroot" != "root" ]
+then
+	echo "Must be root... Exiting now..."
+	exit 1
+fi
+
+DIALOG="`which yad` --width=450 --height=250 --window-icon=preferences-desktop-display --image=preferences-desktop-display"
+TEXT="--text="
+TITLE="--title="
+ENTRY="--entry"
+MENU="--list --column=$LOCAL1 --column=$LOCAL2"
+OKEXIT="--button=Ok:0 --button=$LOCAL3:1"
+OKBUTTON="--button=Ok:0"
+
+if [ -f /opt/sparky/sparky-xterm ]
+then
+. /opt/sparky/sparky-xterm
+else
+SPARKYXTERM="x-terminal-emulator"
+fi
+
+$DIALOG $TEXT"\n$LOCAL16" $TITLE"$LOCAL15" $OKEXIT
+
+if [ "$?" != "0" ]
+then
+	$DIALOG $TEXT"\n$LOCAL17" $TITLE"$LOCAL15" $OKBUTTON
+	exit 1
+fi
+
+# recive desktop name to be removed
+case $1  in
+  awesome)
+	PACKAGE="awesome"
+	DESKTOP="Awesome"
+	WMAN="awesome"
+     ;;
+  bspwm)
+	PACKAGE="bspwm"
+	DESKTOP="Bspwm"
+	WMAN="bspwm"
+     ;;
+  budgie)
+	PACKAGE="budgie"
+	DESKTOP="Budgie"
+	WMAN="budgie-wm"
+     ;;
+  cde)
+	PACKAGE="cde"
+	DESKTOP="CDE"
+	WMAN="dtsession"
+     ;;
+  cinnamon)
+	PACKAGE="cinnamon"
+	DESKTOP="Cinnamon"
+	WMAN="cinnamon"
+     ;;
+  deepin)
+	PACKAGE="deepin"
+	DESKTOP="Deepin"
+	WMAN="deepin-wm"
+     ;;
+  enlightenment)
+	PACKAGE="enlightenment"
+	DESKTOP="Enlightenment"
+	WMAN="enlightenment"
+     ;;
+  fluxbox)
+	PACKAGE="fluxbox"
+	DESKTOP="Fluxbox"
+	WMAN="fluxbox"
+     ;;
+  gnomeflashback)
+	PACKAGE="gnome-flashback"
+	DESKTOP="GNOME Flashback"
+	WMAN="metacity"
+     ;;
+  gnomeshell)
+	PACKAGE="gnome-shell"
+	DESKTOP="GNOME Shell"
+	WMAN="gnome-shell"
+     ;;
+  i3)
+	PACKAGE="i3"
+	DESKTOP="i3"
+	WMAN="i3"
+     ;;
+  icewm)
+	PACKAGE="icewm"
+	DESKTOP="IceWM"
+	WMAN="icewm"
+     ;;
+  jwm)
+	PACKAGE="jwm"
+	DESKTOP="JWM"
+	WMAN="jwm"
+     ;;
+  kde)
+	PACKAGE="kde"
+	DESKTOP="KDE Plasma"
+	WMAN="kwin_x11"
+     ;;
+  lumina)
+	PACKAGE="lumina"
+	DESKTOP="Lumina"
+	WMAN="lumina-desktop"
+     ;;
+  lxde)
+	PACKAGE="lxde"
+	DESKTOP="LXDE"
+	WMAN="openbox"
+     ;;
+  lxqt)
+	PACKAGE="lxqt"
+	DESKTOP="LXQt"
+	WMAN="openbox"
+     ;;
+  mate)
+	PACKAGE="mate"
+	DESKTOP="MATE"
+	WMAN="marco"
+     ;;
+  openbox)
+	PACKAGE="openbox"
+	DESKTOP="Openbox"
+	WMAN="openbox"
+     ;;
+  pantheon)
+	PACKAGE="pantheon"
+	DESKTOP="Pantheon"
+	WMAN="gala"
+     ;;
+  pekwm)
+	PACKAGE="pekwm"
+	DESKTOP="PekWM"
+	WMAN="pekwm"
+     ;;
+  trinity)
+	PACKAGE="trinity"
+	DESKTOP="Trinity"
+	WMAN="twin"
+     ;;
+  wmaker)
+	PACKAGE="wmaker"
+	DESKTOP="WindowMaker"
+	WMAN="wmaker"
+     ;;
+  xfce)
+	PACKAGE="xfce"
+	DESKTOP="Xfce"
+	WMAN="xfwm4"
+     ;;
+esac
+
+if [ "$PACKAGE" = "lumina" ]
+then
+	if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ] 
+	then
+		$DIALOG $TEXT"\n$LOCAL21" $TITLE"$LOCAL15" $OKBUTTON
+		exit 1
+	fi
+
+	if [ $(pidof fluxbox) ] && [ $(pidof "$WMAN") ]  
+	then
+		$DIALOG $TEXT"\n$LOCAL18 $DESKTOP $LOCAL19\n\n$LOCAL20" $TITLE"$LOCAL15" $OKBUTTON
+		exit 1
+	fi
+
+	$DIALOG $TEXT"\n$LOCAL22" $TITLE"$LOCAL15" $OKEXIT
+	if [ $? != 0 ]
+	then
+		exit 0
+	else
+		$SPARKYXTERM -e "apt-get purge sparky-desktop-$PACKAGE -y"
+		$SPARKYXTERM -e "apt-get autoremove -f"
+	fi
+
+elif [ "$PACKAGE" = "lxde" ]
+then
+	if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ] 
+	then
+		$DIALOG $TEXT"\n$LOCAL21" $TITLE"$LOCAL15" $OKBUTTON
+		exit 1
+	fi
+
+	if [ $(pidof "$WMAN") ] && [ $(pidof lxpanel) ] && [ $(pidof lxpolkit) ]  
+	then
+		$DIALOG $TEXT"\n$LOCAL18 $DESKTOP $LOCAL19\n\n$LOCAL20" $TITLE"$LOCAL15" $OKBUTTON
+		exit 1
+	fi
+
+	$DIALOG $TEXT"\n$LOCAL22" $TITLE"$LOCAL15" $OKEXIT
+	if [ $? != 0 ]
+	then
+		exit 0
+	else
+		$SPARKYXTERM -e "apt-get purge sparky-desktop-$PACKAGE -y"
+		$SPARKYXTERM -e "apt-get autoremove -f"
+	fi
+
+elif [ "$PACKAGE" = "lxqt" ]
+then
+	if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ] 
+	then
+		$DIALOG $TEXT"\n$LOCAL21" $TITLE"$LOCAL15" $OKBUTTON
+		exit 1
+	fi
+
+	if [ $(pidof "$WMAN") ] && [ $(pidof lxqt-panel) ] && [ $(pidof lxqt-policykit-agent) ]  
+	then
+		$DIALOG $TEXT"\n$LOCAL18 $DESKTOP $LOCAL19\n\n$LOCAL20" $TITLE"$LOCAL15" $OKBUTTON
+		exit 1
+	fi
+
+	$DIALOG $TEXT"\n$LOCAL22" $TITLE"$LOCAL15" $OKEXIT
+	if [ $? != 0 ]
+	then
+		exit 0
+	else
+		$SPARKYXTERM -e "apt-get purge sparky-desktop-$PACKAGE -y"
+		$SPARKYXTERM -e "apt-get autoremove -f"
+	fi
+
+else
+	if [ $(pidof "$WMAN") ]
+	then
+		$DIALOG $TEXT"\n$LOCAL18 $DESKTOP $LOCAL19\n\n$LOCAL20" $TITLE"$LOCAL15" $OKBUTTON
+		exit 1
+	fi
+
+	if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ] 
+	then
+		$DIALOG $TEXT"\n$LOCAL21" $TITLE"$LOCAL15" $OKBUTTON
+		exit 1
+	fi
+
+	$DIALOG $TEXT"\n$LOCAL22" $TITLE"$LOCAL15" $OKEXIT
+	if [ $? != 0 ]
+	then
+		exit 0
+	else
+		$SPARKYXTERM -e "apt-get purge sparky-desktop-$PACKAGE -y"
+		$SPARKYXTERM -e "apt-get autoremove -f"
+	fi
+
+fi
+
+$DIALOG $TEXT"\n$LOCAL23" $TITLE"$LOCAL15" $OKBUTTON
+
+exit 0
