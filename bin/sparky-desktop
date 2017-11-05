@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2017/09/018 by pavroo
+# last update 2017/11/03 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -61,6 +61,7 @@ then
 else
 SPARKYXTERM="x-terminal-emulator"
 fi
+ARCHARM="`uname -m | grep arm`"
 
 # check connection
 PINGTEST=$(ping -c 1 debian.org | grep [0-9])
@@ -210,9 +211,25 @@ then
 		$SPARKYXTERM -e "apt-get install -f"
 	fi
 
+elif [ "$1" = "cde" ]
+then
+	if [ "$ARCHARM" != "" ]
+	then
+		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
+		exit 1
+	else
+		$SPARKYXTERM -e "apt-get update"
+		$SPARKYXTERM -e "apt-get install sparky-desktop-$PACKAGE -y"
+		$SPARKYXTERM -e "apt-get install -f"
+	fi
+
 elif [ "$1" = "deepin" ]
 then
-	if [ "$OLDSTABLECHECK1" != "" ] || [ "$OLDSTABLECHECK2" != "" ]
+	if [ "$ARCHARM" != "" ]
+	then
+		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
+		exit 1
+	elif [ "$OLDSTABLECHECK1" != "" ] || [ "$OLDSTABLECHECK2" != "" ]
 	then
 		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
 		exit 1
@@ -242,15 +259,29 @@ then
 
 elif [ "$1" = "pantheon" ]
 then
-	if [ "$OLDSTABLECHECK1" != "" ] || [ "$OLDSTABLECHECK2" != "" ]
+	if [ "$ARCHARM" != "" ]
+	then
+		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
+		exit 1
+	elif [ "$OLDSTABLECHECK1" != "" ] || [ "$OLDSTABLECHECK2" != "" ]
 	then
 		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
 		exit 1
 	elif [ "$SPARKYVERCHECK5" != "" ] || [ "$DEBIANVERCHECK10" != "" ]
 	then
-		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
-	else
+		#$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
+		#exit 1
+		if [ -f /etc/apt/sources.list.d/pantheon-debian.list ]
+		then
+			rm -f /etc/apt/sources.list.d/pantheon-debian.list
+		fi
+		echo "deb http://gandalfn.ovh/debian testing-daily main contrib" > /etc/apt/sources.list.d/pantheon-debian.list
+		$SPARKYXTERM -e "wget http://gandalfn.ovh/debian/pantheon-debian.gpg.key -O- | apt-key add -"
+		$SPARKYXTERM -e "apt-get update"
+		$SPARKYXTERM -e "apt-get install sparky-desktop-$PACKAGE -y"
+		$SPARKYXTERM -e "apt-get install -f"
+	elif [ "$SPARKYVERCHECK4" != "" ] || [ "$DEBIANVERCHECK9" != "" ]
+	then
 		if [ -f /etc/apt/sources.list.d/pantheon-debian.list ]
 		then
 			rm -f /etc/apt/sources.list.d/pantheon-debian.list
@@ -261,7 +292,7 @@ then
 		$SPARKYXTERM -e "apt-get install sparky-desktop-$PACKAGE -y"
 		$SPARKYXTERM -e "apt-get install -f"
 	fi
-	
+
 elif [ "$1" = "trinity" ]
 then
 	if [ -f /etc/apt/sources.list.d/trinity.list ]
@@ -277,7 +308,13 @@ then
 		echo "deb-src http://mirror.ppa.trinitydesktop.org/trinity/trinity-r14.0.0/debian jessie main" >> /etc/apt/sources.list.d/trinity.list
 		echo "deb http://mirror.ppa.trinitydesktop.org/trinity/trinity-builddeps-r14.0.0/debian jessie main" >> /etc/apt/sources.list.d/trinity.list
 		echo "deb-src http://mirror.ppa.trinitydesktop.org/trinity/trinity-builddeps-r14.0.0/debian jessie main" >> /etc/apt/sources.list.d/trinity.list
-	else
+	elif [ "$SPARKYVERCHECK5" != "" ] || [ "$DEBIANVERCHECK10" != "" ]
+	then
+		$SPARKYXTERM -e "apt-key adv --keyserver keys.gnupg.net --recv-key A04BE668"
+		echo "deb http://mirror.xcer.cz/trinity-sb $TDEREPO deps-r14 main-r14" >> /etc/apt/sources.list.d/trinity.list
+		echo "deb-src http://mirror.xcer.cz/trinity-sb $TDEREPO deps-r14 main-r14" >> /etc/apt/sources.list.d/trinity.list
+	elif [ "$SPARKYVERCHECK4" != "" ] || [ "$DEBIANVERCHECK9" != "" ]
+	then
 		$SPARKYXTERM -e "apt-key adv --keyserver keys.gnupg.net --recv-key A04BE668"
 		echo "deb http://mirror.xcer.cz/trinity-sb $TDEREPO deps-r14 main-r14" >> /etc/apt/sources.list.d/trinity.list
 		echo "deb-src http://mirror.xcer.cz/trinity-sb $TDEREPO deps-r14 main-r14" >> /etc/apt/sources.list.d/trinity.list
