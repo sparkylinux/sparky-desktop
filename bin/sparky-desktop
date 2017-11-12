@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2017/11/03 by pavroo
+# last update 2017/11/12 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -148,7 +148,12 @@ case $1  in
 	PACKAGE="mate"
      ;;
   openbox)
-	PACKAGE="openbox"
+	if [ "$ARCHARM" != "" ]
+	then
+		PACKAGE="openbox-arm"
+	else
+		PACKAGE="openbox"
+	fi
      ;;
   pantheon)
 	PACKAGE="pantheon"
