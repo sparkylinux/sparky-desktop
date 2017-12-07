@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2017/11/12 by pavroo
+# last update 2017/12/07 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -101,9 +101,9 @@ case $1  in
   cinnamon)
 	PACKAGE="cinnamon"
      ;;
-  deepin)
-	PACKAGE="deepin"
-     ;;
+#  deepin)
+#	PACKAGE="deepin"
+#    ;;
   enlightenment)
 	PACKAGE="enlightenment"
      ;;
@@ -228,27 +228,27 @@ then
 		$SPARKYXTERM -e "apt-get install -f"
 	fi
 
-elif [ "$1" = "deepin" ]
-then
-	if [ "$ARCHARM" != "" ]
-	then
-		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
-	elif [ "$OLDSTABLECHECK1" != "" ] || [ "$OLDSTABLECHECK2" != "" ]
-	then
-		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
-	else
-		if [ -f /etc/apt/sources.list.d/sparky-dde.list ]
-		then
-			rm -f /etc/apt/sources.list.d/sparky-dde.list
-		fi
-		echo "deb https://sparkylinux.org/repo/ dde main" > /etc/apt/sources.list.d/sparky-dde.list
-		echo "deb-src https://sparkylinux.org/repo/ dde main" >> /etc/apt/sources.list.d/sparky-dde.list
-		$SPARKYXTERM -e "apt-get update"
-		$SPARKYXTERM -e "apt-get install --no-install-recommends sparky-desktop-$PACKAGE -y"
-		$SPARKYXTERM -e "apt-get install -f"
-	fi
+#elif [ "$1" = "deepin" ]
+#then
+#	if [ "$ARCHARM" != "" ]
+#	then
+#		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
+#		exit 1
+#	elif [ "$OLDSTABLECHECK1" != "" ] || [ "$OLDSTABLECHECK2" != "" ]
+#	then
+#		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
+#		exit 1
+#	else
+#		if [ -f /etc/apt/sources.list.d/sparky-dde.list ]
+#		then
+#			rm -f /etc/apt/sources.list.d/sparky-dde.list
+#		fi
+#		echo "deb https://sparkylinux.org/repo/ dde main" > /etc/apt/sources.list.d/sparky-dde.list
+#		echo "deb-src https://sparkylinux.org/repo/ dde main" >> /etc/apt/sources.list.d/sparky-dde.list
+#		$SPARKYXTERM -e "apt-get update"
+#		$SPARKYXTERM -e "apt-get install --no-install-recommends sparky-desktop-$PACKAGE -y"
+#		$SPARKYXTERM -e "apt-get install -f"
+#	fi
 
 elif [ "$1" = "enlightenment" ]
 then
@@ -601,16 +601,16 @@ then
 		exit 1
 	fi
 
-elif [ "$1" = "deepin" ]
-then
-	if [ -f /usr/bin/startdde ] && [ -d /usr/share/sparky-desktop-data/deepin/skel ]
-	then
-		if [ -d /home/$TARGETUSER/.config/dconf ]
-		then
-			rm -rf /home/$TARGETUSER/.config/dconf
-		fi
-		mkdir -p /home/$TARGETUSER/.config/dconf
-		rsync -a /usr/share/sparky-desktop-data/deepin/skel/.config/dconf /home/$TARGETUSER/.config/
+#elif [ "$1" = "deepin" ]
+#then
+#	if [ -f /usr/bin/startdde ] && [ -d /usr/share/sparky-desktop-data/deepin/skel ]
+#	then
+#		if [ -d /home/$TARGETUSER/.config/dconf ]
+#		then
+#			rm -rf /home/$TARGETUSER/.config/dconf
+#		fi
+#		mkdir -p /home/$TARGETUSER/.config/dconf
+#		rsync -a /usr/share/sparky-desktop-data/deepin/skel/.config/dconf /home/$TARGETUSER/.config/
 
 		#CHECKDM=`cat /etc/X11/default-display-manager | grep lightdm`
 		#if [ "$CHECKDM" != "" ]
@@ -624,57 +624,57 @@ then
 		#	fi
 		#fi
 		
-		if [ -f /home/$TARGETUSER/.gtkrc-2.0 ]
-		then
-			rm -f /home/$TARGETUSER/.gtkrc-2.0
-		fi
-		cp /usr/share/sparky-desktop-data/deepin/skel/.gtkrc-2.0 /home/$TARGETUSER/.gtkrc-2.0
-		chown $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.gtkrc-2.0
-
-		if [ -d /home/$TARGETUSER/.config/gtk-3.0 ]
-		then
-			rm -rf /home/$TARGETUSER/.config/gtk-3.0
-		fi
-		mkdir -p /home/$TARGETUSER/.config/gtk-3.0
-		rsync -a /usr/share/sparky-desktop-data/deepin/skel/.config/gtk-3.0 /home/$TARGETUSER/.config/
-		
-		if [ -f /home/$TARGETUSER/.config/Trolltech.conf ]
-		then
-			rm -f /home/$TARGETUSER/.config/Trolltech.conf
-		fi
-		cp /usr/share/sparky-desktop-data/deepin/skel/.config/Trolltech.conf /home/$TARGETUSER/.config/Trolltech.conf
-		
-		if [ -f /home/$TARGETUSER/.config/nautilus/desktop-metadata ]
-		then
-			rm -f /home/$TARGETUSER/.config/nautilus/desktop-metadata
-		fi
-		if [ ! -d /home/$TARGETUSER/.config/nautilus ]
-		then
-			mkdir -p /home/$TARGETUSER/.config/nautilus
-		fi
-		cp /usr/share/sparky-desktop-data/deepin/skel/.config/nautilus/desktop-metadata /home/$TARGETUSER/.config/nautilus/desktop-metadata
-
-		if [ -f /home/$TARGETUSER/.local/share/applications/synaptic.desktop ]
-		then
-			rm -f /home/$TARGETUSER/.local/share/applications/synaptic.desktop
-		fi
-		if [ ! -d /home/$TARGETUSER/.local/share/applications ]
-		then
-			mkdir -p /home/$TARGETUSER/.local/share/applications
-		fi
-		cp /usr/share/sparky-desktop-data/deepin/skel/.local/share/applications/synaptic.desktop /home/$TARGETUSER/.local/share/applications/synaptic.desktop
-
-		if [ -f /home/$TARGETUSER/.local/share/applications/gufw.desktop ]
-		then
-			rm -f /home/$TARGETUSER/.local/share/applications/gufw.desktop
-		fi
-		cp /usr/share/sparky-desktop-data/deepin/skel/.local/share/applications/gufw.desktop /home/$TARGETUSER/.local/share/applications/gufw.desktop
-		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.local
-		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
-	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
-	fi
+#		if [ -f /home/$TARGETUSER/.gtkrc-2.0 ]
+#		then
+#			rm -f /home/$TARGETUSER/.gtkrc-2.0
+#		fi
+#		cp /usr/share/sparky-desktop-data/deepin/skel/.gtkrc-2.0 /home/$TARGETUSER/.gtkrc-2.0
+#		chown $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.gtkrc-2.0
+#
+#		if [ -d /home/$TARGETUSER/.config/gtk-3.0 ]
+#		then
+#			rm -rf /home/$TARGETUSER/.config/gtk-3.0
+#		fi
+#		mkdir -p /home/$TARGETUSER/.config/gtk-3.0
+#		rsync -a /usr/share/sparky-desktop-data/deepin/skel/.config/gtk-3.0 /home/$TARGETUSER/.config/
+#		
+#		if [ -f /home/$TARGETUSER/.config/Trolltech.conf ]
+#		then
+#			rm -f /home/$TARGETUSER/.config/Trolltech.conf
+#		fi
+#		cp /usr/share/sparky-desktop-data/deepin/skel/.config/Trolltech.conf /home/$TARGETUSER/.config/Trolltech.conf
+#		
+#		if [ -f /home/$TARGETUSER/.config/nautilus/desktop-metadata ]
+#		then
+#			rm -f /home/$TARGETUSER/.config/nautilus/desktop-metadata
+#		fi
+#		if [ ! -d /home/$TARGETUSER/.config/nautilus ]
+#		then
+#			mkdir -p /home/$TARGETUSER/.config/nautilus
+#		fi
+#		cp /usr/share/sparky-desktop-data/deepin/skel/.config/nautilus/desktop-metadata /home/$TARGETUSER/.config/nautilus/desktop-metadata
+#
+#		if [ -f /home/$TARGETUSER/.local/share/applications/synaptic.desktop ]
+#		then
+#			rm -f /home/$TARGETUSER/.local/share/applications/synaptic.desktop
+#		fi
+#		if [ ! -d /home/$TARGETUSER/.local/share/applications ]
+#		then
+#			mkdir -p /home/$TARGETUSER/.local/share/applications
+#		fi
+#		cp /usr/share/sparky-desktop-data/deepin/skel/.local/share/applications/synaptic.desktop /home/$TARGETUSER/.local/share/applications/synaptic.desktop
+#
+#		if [ -f /home/$TARGETUSER/.local/share/applications/gufw.desktop ]
+#		then
+#			rm -f /home/$TARGETUSER/.local/share/applications/gufw.desktop
+#		fi
+#		cp /usr/share/sparky-desktop-data/deepin/skel/.local/share/applications/gufw.desktop /home/$TARGETUSER/.local/share/applications/gufw.desktop
+#		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.local
+#		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+#	else
+#		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
+#		exit 1
+#	fi
 
 elif [ "$1" = "enlightenment" ]
 then
@@ -1510,6 +1510,35 @@ then
 		fi
 		cp /usr/share/sparky-desktop-data/lxde/skel/.config/menus/lxde-applications.menu /home/$TARGETUSER/.config/menus/
 		chown $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config/menus
+
+		if [ ! -d /home/$TARGETUSER/.alsaplayer ]
+		then
+			mkdir -p /home/$TARGETUSER/.alsaplayer
+		fi
+		cp /usr/share/sparky-desktop-data/openbox/skel/.alsaplayer/config /home/$TARGETUSER/.alsaplayer/
+		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.alsaplayer
+
+		if [ -f /home/$TARGETUSER/.config/pnmixer/config ]
+		then
+			rm -f /home/$TARGETUSER/.config/pnmixer/config
+		fi
+		if [ ! -d /home/$TARGETUSER/.config/pnmixer ]
+		then
+			mkdir -p /home/$TARGETUSER/.config/pnmixer
+		fi
+		cp /usr/share/sparky-desktop-data/openbox/skel/.config/pnmixer/config /home/$TARGETUSER/.config/pnmixer/
+		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config/pnmixer
+
+		if [ -f /home/$TARGETUSER/.config/xfce4/xfconf/xfce-perchannel-xml/thunar-volman.xml ]
+		then
+			rm -f /home/$TARGETUSER/.config/xfce4/xfconf/xfce-perchannel-xml/thunar-volman.xml
+		fi
+		if [ ! -d /home/$TARGETUSER/.config/xfce4/xfconf/xfce-perchannel-xml ]
+		then
+			mkdir -p /home/$TARGETUSER/.config/xfce4/xfconf/xfce-perchannel-xml
+		fi
+		cp /usr/share/sparky-desktop-data/openbox/skel/.config/xfce4/xfconf/xfce-perchannel-xml/thunar-volman.xml /home/$TARGETUSER/.config/xfce4/xfconf/xfce-perchannel-xml/
+		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config/xfce4/xfconf/xfce-perchannel-xml
 	else
 		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
 		exit 1
