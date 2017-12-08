@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2017/12/07 by pavroo
+# last update 2017/12/08 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -1421,7 +1421,7 @@ then
 
 elif [ "$1" = "openbox" ]
 then
-	if [ -f /usr/bin/obmenu-generator ] && [ -d /usr/share/sparky-desktop-data/openbox/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-openbox ] && [ -d /usr/share/sparky-desktop-data/openbox/skel ]
 	then
 		if [ -d /home/$TARGETUSER/.config/lxsession ]
 		then
@@ -1527,6 +1527,14 @@ then
 			mkdir -p /home/$TARGETUSER/.config/pnmixer
 		fi
 		cp /usr/share/sparky-desktop-data/openbox/skel/.config/pnmixer/config /home/$TARGETUSER/.config/pnmixer/
+		if [ -f /home/$TARGETUSER/.config/pnmixer/config ] && [ "$ARCHARM" != "" ]
+		then
+			CHECKPNMIXER=`cat /home/$TARGETUSER/.config/pnmixer/config | grep pavucontrol`
+			if [ "$CHECKPNMIXER" != "" ]
+			then
+				sed -i -e 's/pavucontrol/x-terminal-emulator -e alsamixer/g' /home/$TARGETUSER/.config/pnmixer/config
+			fi
+		fi
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config/pnmixer
 
 		if [ -f /home/$TARGETUSER/.config/xfce4/xfconf/xfce-perchannel-xml/thunar-volman.xml ]
