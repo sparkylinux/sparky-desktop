@@ -1,4 +1,11 @@
 -------------------------------------------------------------------------------
+  Version 20171214 (2017-12-14)
+-------------------------------------------------------------------------------
+  * Added separate window for arm arch
+  * Separated desktops to 3 different sub-windows depends of repository source
+  * Removed "--yes" option of apt command when installing packages
+
+-------------------------------------------------------------------------------
   Version 20171212 (2017-12-08)
 -------------------------------------------------------------------------------
   * Added pnmixer different settings if arm arch detected

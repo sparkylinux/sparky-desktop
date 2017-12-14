@@ -2,8 +2,7 @@
 # Copyright 2016 Pawel "pavroo" Pijanowski <pavroo@onet.eu> 2016/03/21
 # Traduzido por Claudio Cesar de Sá "ccs1664" <ccs1664@gmail.com> 29/04/2016
 # Sob a Licença GNU GPL v2
-# Last update 2017/08/21 by pavroo
-
+# Last update 2017/12/14 by pavroo
 LOCAL1="Nome"
 LOCAL2="Descrição"
 LOCAL3="Sair"
@@ -28,3 +27,5 @@ LOCAL21="The desktop metapackage is NOT installed so CAN NOT be removed.\n\nClic
 LOCAL22="It will remove a desktop you have choosen and you do not need it any more.\n\nAre you sure?"
 LOCAL23="If everything went well, your desktop has been removed from your system."
 LOCAL24="This desktop is a 3rd party application and NOT maintained by Debian or Sparky developers, so it is possible that it will be NOT working properly."
+LOCAL25="Others"
+LOCAL26="Desktop packages can be installed from different repositories:"

@@ -1,8 +1,7 @@
 # File di localizzazione italiano per Sparky Desktop Installer
 # Copyright 2016 Carlo Troiani <troianicarlo@gmail.com> 24/03/2016
 # Rilasciato sotto licenza GNU GPL v2
-# Last update 2017/08/21 by pavroo
-
+# Last update 2017/12/14 by pavroo
 LOCAL1="Nome"
 LOCAL2="Descrizione"
 LOCAL3="Esci"
@@ -27,3 +26,5 @@ LOCAL21="Il metapacchetto del desktop NON è installato, pertanto NON potrà ess
 LOCAL22="Procedendo aptus rimuoverà il desktop prescelto e di cui non hai più bisogno.\n\Vuoi davvero proseguire?"
 LOCAL23="Se tutto è andato bene, il desktop è stato rimosso dal tuo sistema."
 LOCAL24="This desktop is a 3rd party application and NOT maintained by Debian or Sparky developers, so it is possible that it will be NOT working properly."
+LOCAL25="Others"
+LOCAL26="Desktop packages can be installed from different repositories:"

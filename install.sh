@@ -21,7 +21,7 @@ if [ "$1" = "uninstall" ]; then
 	rm -rf /usr/lib/sparky-desktop
 	rm -f /usr/lib/sparky-aptus/inst/add-desktop.desktop
 	rm -f /usr/lib/sparky-aptus/remove/remove-desktop.desktop
-	rm -rf /usr/lib/sparky-desktop/bin
+	rm -rf /usr/lib/sparkydesktop
 	rm -rf /usr/share/sparky/sparky-desktop	
 else
 	cp bin/* /usr/bin/
@@ -29,18 +29,22 @@ else
 		mkdir -p /usr/share/icons/sparky/desktops
 	fi
 	cp icons/* /usr/share/icons/sparky/desktops/
-	if [ ! -d /usr/lib/sparky-desktop/inst ]; then
-		mkdir -p /usr/lib/sparky-desktop/inst
+	if [ ! -d /usr/lib/sparkydesktop/inst ]; then
+		mkdir -p /usr/lib/sparkydesktop/inst
 	fi
-	cp libinst/* /usr/lib/sparky-desktop/inst/
-	if [ ! -d /usr/lib/sparky-desktop/remove ]; then
-		mkdir -p /usr/lib/sparky-desktop/remove
+	cp libinst/* /usr/lib/sparkydesktop/inst/
+	if [ ! -d /usr/lib/sparkydesktop/inst-arm ]; then
+		mkdir -p /usr/lib/sparkydesktop/inst-arm
 	fi
-	cp libremove/* /usr/lib/sparky-desktop/remove/
-	if [ ! -d /usr/lib/sparky-desktop/bin ]; then
-		mkdir -p /usr/lib/sparky-desktop/bin
+	cp libinst-arm/* /usr/lib/sparkydesktop/inst-arm/
+	if [ ! -d /usr/lib/sparkydesktop/remove ]; then
+		mkdir -p /usr/lib/sparkydesktop/remove
 	fi
-	cp libbin/* /usr/lib/sparky-desktop/bin/
+	cp libremove/* /usr/lib/sparkydesktop/remove/
+	if [ ! -d /usr/lib/sparkydesktop/bin ]; then
+		mkdir -p /usr/lib/sparkydesktop/bin
+	fi
+	cp libbin/* /usr/lib/sparkydesktop/bin/
 	if [ ! -d /usr/lib/sparky-aptus/inst ]; then
 		mkdir -p /usr/lib/sparky-aptus/inst
 	fi
@@ -52,5 +56,5 @@ else
 	if [ ! -d /usr/share/sparky/sparky-desktop ]; then
 		mkdir -p /usr/share/sparky/sparky-desktop
 	fi
-	cp sparky-desktop/* /usr/share/sparky/sparky-desktop/
+	cp lang/* /usr/share/sparky/sparky-desktop/
 fi

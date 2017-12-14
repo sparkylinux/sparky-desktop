@@ -1,8 +1,7 @@
 # Spanish localization file for Sparky Desktop Installer
 # Copyright 2016 Miguel "DellDor" Dell'Uomini <delldor@gmail.com> 2016/04/12
 # Under the GNU GPL v3
-# Last update 2017/08/21 by pavroo
-
+# Last update 2017/12/14 by pavroo
 LOCAL1="Nombre"
 LOCAL2="Descripción"
 LOCAL3="Salir"
@@ -27,3 +26,5 @@ LOCAL21="The desktop metapackage is NOT installed so CAN NOT be removed.\n\nClic
 LOCAL22="It will remove a desktop you have choosen and you do not need it any more.\n\nAre you sure?"
 LOCAL23="If everything went well, your desktop has been removed from your system."
 LOCAL24="This desktop is a 3rd party application and NOT maintained by Debian or Sparky developers, so it is possible that it will be NOT working properly."
+LOCAL25="Others"
+LOCAL26="Desktop packages can be installed from different repositories:"
