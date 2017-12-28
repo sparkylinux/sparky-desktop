@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2017/12/14 by pavroo
+# last update 2017/12/22 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -71,6 +71,16 @@ if [ "$PINGTEST" = "" ]; then
 	exit 1
 fi
 
+if [ "$1" = "" ]
+then
+	echo "Usage of sparky-desktop is as follows:"
+	echo "sudo sparky-desktop <desktop-name>"
+	echo ""
+	echo "For example:"
+	echo "sudo sparky-desktop openbox"
+	exit 1
+fi
+
 if [ "$1" = "pantheon" ] || [ "$1" = "trinity" ]
 then
 	$DIALOG $TEXT"\n$LOCAL5\n\n$LOCAL24\n\n$LOCAL11" $TITLE"$LOCAL6" $OKEXIT
@@ -85,7 +95,7 @@ then
 fi
 
 # recive desktop name to be installed
-case $1  in
+case $1 in
   awesome)
 	PACKAGE="awesome"
      ;;
@@ -362,7 +372,7 @@ fi
 # replace the desktop config files
 if [ "$1" = "awesome" ]
 then
-	if [ -f /usr/bin/awesome ] && [ -d /usr/share/sparky-desktop-data/awesome/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-awesome ] && [ -d /usr/share/sparky-desktop-data/awesome/skel ]
 	then
 		if [ -d /home/$TARGETUSER/.config/awesome ]
 		then
@@ -405,14 +415,14 @@ then
 		fi
 		cp /usr/share/sparky-desktop-data/awesome/skel/.config/Trolltech.conf /home/$TARGETUSER/.config/Trolltech.conf
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 elif [ "$1" = "bspwm" ]
 then
-	if [ -f /usr/bin/bspwm ] && [ -d /usr/share/sparky-desktop-data/bspwm/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-bspwm ] && [ -d /usr/share/sparky-desktop-data/bspwm/skel ]
 	then
 		if [ -d /home/$TARGETUSER/.config/bspwm ]
 		then
@@ -476,14 +486,14 @@ then
 		mkdir -p /home/$TARGETUSER/.config/tint2
 		rsync -a /usr/share/sparky-desktop-data/bspwm/skel/.config/tint2 /home/$TARGETUSER/.config/
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 elif [ "$1" = "budgie" ]
 then
-	if [ -f /usr/bin/budgie-desktop ] && [ -d /usr/share/sparky-desktop-data/budgie/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-budgie ] && [ -d /usr/share/sparky-desktop-data/budgie/skel ]
 	then
 		if [ -d /home/$TARGETUSER/.config/gnome-control-center/backgrounds ]
 		then
@@ -519,23 +529,23 @@ then
 		fi
 		cp /usr/share/sparky-desktop-data/budgie/skel/.config/Trolltech.conf /home/$TARGETUSER/.config/Trolltech.conf
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 elif [ "$1" = "cde" ]
 then
-	if [ -d /usr/dt/bin ]; then
+	if [ -d /usr/share/doc/sparky-desktop-cde ]; then
 		echo "installation cde desktop ok, no extra files to be installed"
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 elif [ "$1" = "cinnamon" ]
 then
-	if [ -f /usr/bin/cinnamon ] && [ -d /usr/share/sparky-desktop-data/cinnamon/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-cinnamon ] && [ -d /usr/share/sparky-desktop-data/cinnamon/skel ]
 	then
 		if [ -d /home/$TARGETUSER/.cinnamon ]
 		then
@@ -596,9 +606,9 @@ then
 		cp /usr/share/sparky-desktop-data/cinnamon/skel/.local/share/applications/gufw.desktop /home/$TARGETUSER/.local/share/applications/gufw.desktop
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.local
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 #elif [ "$1" = "deepin" ]
@@ -678,7 +688,7 @@ then
 
 elif [ "$1" = "enlightenment" ]
 then
-	if [ -f /usr/bin/enlightenment ] && [ -d /usr/share/sparky-desktop-data/enlightenment/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-enlightenment ] && [ -d /usr/share/sparky-desktop-data/enlightenment/skel ]
 	then
 		if [ -d /home/$TARGETUSER/.e ]
 		then
@@ -717,14 +727,14 @@ then
 		fi
 		cp /usr/share/sparky-desktop-data/enlightenment/skel/.config/Trolltech.conf /home/$TARGETUSER/.config/Trolltech.conf
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 elif [ "$1" = "fluxbox" ]
 then
-	if [ -f /usr/bin/startfluxbox ] && [ -d /usr/share/sparky-desktop-data/fluxbox/skel ] && [ -f /opt/sparky/sparky-fluxbox ]
+	if [ -d /usr/share/doc/sparky-desktop-fluxbox ] && [ -d /usr/share/sparky-desktop-data/fluxbox/skel ] && [ -f /opt/sparky/sparky-fluxbox ]
 	then
 		if [ -d /home/$TARGETUSER/.fluxbox ]
 		then
@@ -768,14 +778,14 @@ then
 		fi
 		cp /usr/share/sparky-desktop-data/fluxbox/skel/.config/Trolltech.conf /home/$TARGETUSER/.config/Trolltech.conf
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 elif [ "$1" = "gnomeflashback" ]
 then
-	if [ -f /usr/bin/gnome-flashback ] && [ -d /usr/share/sparky-desktop-data/gnome-fl/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-gnome-flashback ] && [ -d /usr/share/sparky-desktop-data/gnome-fl/skel ]
 	then
 		if [ -d /home/$TARGETUSER/.config/gnome-control-center/backgrounds ]
 		then
@@ -818,14 +828,14 @@ then
 		fi
 		cp /usr/share/sparky-desktop-data/gnome-fl/skel/.config/Trolltech.conf /home/$TARGETUSER/.config/Trolltech.conf
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 elif [ "$1" = "gnomeshell" ]
 then
-	if [ -f /TARGET/usr/share/xsessions/gnome.desktop ] && [ -d /usr/share/sparky-desktop-data/gnome-sh/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-gnome-shell ] && [ -d /usr/share/sparky-desktop-data/gnome-sh/skel ]
 	then
 		if [ -d /home/$TARGETUSER/.config/gnome-control-center/backgrounds ]
 		then
@@ -879,14 +889,14 @@ then
 		fi
 		cp /usr/share/sparky-desktop-data/gnome-sh/skel/.config/Trolltech.conf /home/$TARGETUSER/.config/Trolltech.conf
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 elif [ "$1" = "i3" ]
 then
-	if [ -f /usr/bin/i3 ] && [ -d /usr/share/sparky-desktop-data/i3/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-i3 ] && [ -d /usr/share/sparky-desktop-data/i3/skel ]
 	then
 		if [ -d /home/$TARGETUSER/.config/i3 ]
 		then
@@ -936,14 +946,14 @@ then
 		fi
 		cp /usr/share/sparky-desktop-data/i3/skel/.config/Trolltech.conf /home/$TARGETUSER/.config/Trolltech.conf
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 elif [ "$1" = "icewm" ]
 then
-	if [ -f /usr/bin/icewm ] && [ -d /usr/share/sparky-desktop-data/icewm/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-icewm ] && [ -d /usr/share/sparky-desktop-data/icewm/skel ]
 	then
 		if [ -d /home/$TARGETUSER/.icewm ]
 		then
@@ -987,14 +997,14 @@ then
 		fi
 		cp /usr/share/sparky-desktop-data/icewm/skel/.config/Trolltech.conf /home/$TARGETUSER/.config/Trolltech.conf
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 elif [ "$1" = "jwm" ]
 then
-	if [ -f /usr/bin/jwm ] && [ -d /usr/share/sparky-desktop-data/jwm/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-jwm ] && [ -d /usr/share/sparky-desktop-data/jwm/skel ]
 	then
 		if [ -f /home/$TARGETUSER/.jwmrc ]
 		then
@@ -1037,14 +1047,14 @@ then
 		fi
 		cp /usr/share/sparky-desktop-data/jwm/skel/.config/Trolltech.conf /home/$TARGETUSER/.config/Trolltech.conf
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 elif [ "$1" = "kde" ]
 then
-	if [ -f /usr/bin/startkde ] && [ -d /usr/share/sparky-desktop-data/kde/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-kde ] && [ -d /usr/share/sparky-desktop-data/kde/skel ]
 	then
 		if [ -f /etc/sddm.conf ]
 		then
@@ -1162,14 +1172,14 @@ then
 		mkdir -p /home/$TARGETUSER/.config/gtk-3.0
 		rsync -a /usr/share/sparky-desktop-data/kde/skel/.config/gtk-3.0 /home/$TARGETUSER/.config/
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1		
+		DESKTOPCHECK="1"	
 	fi
 
 elif [ "$1" = "lumina" ]
 then
-	if [ -f /usr/bin/lumina-desktop ] && [ -d /usr/share/sparky-desktop-data/lumina/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-lumina ] && [ -d /usr/share/sparky-desktop-data/lumina/skel ]
 	then
 		if [ -d /home/$TARGETUSER/.config/lumina-desktop ]
 		then
@@ -1219,14 +1229,14 @@ then
 		fi		
 		cp /usr/share/sparky-desktop-data/lumina/skel/.config/autostart/lxpolkit.desktop /home/$TARGETUSER/.config/autostart/lxpolkit.desktop
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 elif [ "$1" = "lxde" ]
 then
-	if [ -f /usr/bin/startlxde ] && [ -d /usr/share/sparky-desktop-data/lxde/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-lxde ] && [ -d /usr/share/sparky-desktop-data/lxde/skel ]
 	then
 		if [ -d /home/$TARGETUSER/.config/gtk-2.0 ]
 		then
@@ -1297,14 +1307,14 @@ then
 		fi
 		cp /usr/share/sparky-desktop-data/lxde/skel/.config/menus/lxde-applications.menu /home/$TARGETUSER/.config/menus/
 		chown $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config/menus
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 elif [ "$1" = "lxqt" ]
 then
-	if [ -f /usr/bin/startlxqt ] && [ -d /usr/share/sparky-desktop-data/lxqt/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-lxqt ] && [ -d /usr/share/sparky-desktop-data/lxqt/skel ]
 	then
 		if [ -d /home/$TARGETUSER/.config/gtk-2.0 ]
 		then
@@ -1357,14 +1367,14 @@ then
 		fi
 		cp /usr/share/sparky-desktop-data/lxqt/skel/.config/Trolltech.conf /home/$TARGETUSER/.config/Trolltech.conf
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 elif [ "$1" = "mate" ]
 then
-	if [ -f /usr/bin/mate-session ] && [ -d /usr/share/sparky-desktop-data/mate/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-mate ] && [ -d /usr/share/sparky-desktop-data/mate/skel ]
 	then
 		if [ -d /home/$TARGETUSER/.config/dconf ]
 		then
@@ -1414,9 +1424,9 @@ then
 		fi
 		cp /usr/share/sparky-desktop-data/mate/skel/.config/Trolltech.conf /home/$TARGETUSER/.config/Trolltech.conf
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 elif [ "$1" = "openbox" ]
@@ -1547,9 +1557,9 @@ then
 		fi
 		cp /usr/share/sparky-desktop-data/openbox/skel/.config/xfce4/xfconf/xfce-perchannel-xml/thunar-volman.xml /home/$TARGETUSER/.config/xfce4/xfconf/xfce-perchannel-xml/
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config/xfce4/xfconf/xfce-perchannel-xml
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 #elif [ "$1" = "pantheon" ]
@@ -1559,7 +1569,7 @@ then
 
 elif [ "$1" = "pantheon" ]
 then
-	if [ -f /usr/bin/pantheon-session ] && [ -d /usr/share/sparky-desktop-data/pantheon/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-pantheon ] && [ -d /usr/share/sparky-desktop-data/pantheon/skel ]
 	then
 		if [ -d /home/$TARGETUSER/.config/marlin ]
 		then
@@ -1621,14 +1631,14 @@ then
 				ln -s /lib/systemd/system/slim.service /etc/systemd/system/display-manager.service
 			fi
 		fi
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 elif [ "$1" = "pekwm" ]
 then
-	if [ -f /usr/bin/pekwm ] && [ -d /usr/share/sparky-desktop-data/pekwm/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-pekwm ] && [ -d /usr/share/sparky-desktop-data/pekwm/skel ]
 	then
 		if [ -d /home/$TARGETUSER/.pekwm ]
 		then
@@ -1679,14 +1689,14 @@ then
 		mkdir -p /home/$TARGETUSER/.config/fbpanel
 		rsync -a /usr/share/sparky-desktop-data/pekwm/skel/.config/fbpanel /home/$TARGETUSER/.config/
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 elif [ "$1" = "trinity" ]
 then
-	if [ -d /usr/share/doc/tde-core-trinity ] && [ -d /usr/share/sparky-desktop-data/trinity/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-trinity ] && [ -d /usr/share/sparky-desktop-data/trinity/skel ]
 	then
 		if [ ! -f /home/$TARGETUSER/.trinity/Autostart/*polkit*.desktop ]
 		then
@@ -1722,14 +1732,14 @@ then
 				ln -s /lib/systemd/system/lightdm.service /etc/systemd/system/display-manager.service
 			fi
 		fi
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1		
+		DESKTOPCHECK="1"	
 	fi
 
 elif [ "$1" = "wmaker" ]
 then
-	if [ -f /usr/bin/wmaker ] && [ -d /usr/share/sparky-desktop-data/wmaker/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-wmaker ] && [ -d /usr/share/sparky-desktop-data/wmaker/skel ]
 	then
 		if [ -d /home/$TARGETUSER/GNUstep ]
 		then
@@ -1773,14 +1783,14 @@ then
 		fi
 		cp /usr/share/sparky-desktop-data/wmaker/skel/.config/Trolltech.conf /home/$TARGETUSER/.config/Trolltech.conf
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 elif [ "$1" = "xfce" ]
 then
-	if [ -f /usr/bin/startxfce4 ] && [ -d /usr/share/sparky-desktop-data/xfce/skel ]
+	if [ -d /usr/share/doc/sparky-desktop-xfce ] && [ -d /usr/share/sparky-desktop-data/xfce/skel ]
 	then
 		if [ -d /home/$TARGETUSER/.config/xfce4 ]
 		then
@@ -1816,9 +1826,9 @@ then
 		fi
 		cp /usr/share/sparky-desktop-data/xfce/skel/.config/Trolltech.conf /home/$TARGETUSER/.config/Trolltech.conf
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+		DESKTOPCHECK="0"
 	else
-		$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
+		DESKTOPCHECK="1"
 	fi
 
 fi
@@ -1828,6 +1838,17 @@ then
 	rm -f /home/$TARGETUSER/.xsession
 fi
 
-$DIALOG $TEXT"\n$LOCAL10" $TITLE"$LOCAL6" $OKBUTTON
+if [ "$DESKTOPCHECK" = "0" ]
+then
+	$DIALOG $TEXT"\n$LOCAL10" $TITLE"$LOCAL6" $OKBUTTON
+	exit 0
+elif [ "$DESKTOPCHECK" = "1" ]
+then
+	$DIALOG $TEXT"\n$LOCAL13" $TITLE"$LOCAL6" $OKBUTTON
+	exit 0
+else
+	echo "It shoudn't happen, report it to Sparky forums, please..."
+	exit 0
+fi
 
 exit 0
