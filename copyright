@@ -2,7 +2,7 @@ Upstream Author(s):
     Paweł "pavroo" Pijanowski <pavroo@onet.eu>
     
 Files: *
-    Copyright (C) 2016,2017 Paweł Pijanowski
+    Copyright (C) 2016-2018 Paweł Pijanowski
     License: GNU GPL-2
 
 File: awesome.png
@@ -146,6 +146,10 @@ File: xfce.png
     Copyright (C) Xfce Team, Sav_vas
     Source: https://commons.wikimedia.org/wiki/File:Xfce_logo.svg
     License: LGPL
+
+File: de
+    Copyright (C) 2018 Deflet Bertling
+    License: GPL-2
 
 File: es
     Copyright (C) 2016 Miguel "DellDor" Dell'Uomini <delldor@gmail.com>

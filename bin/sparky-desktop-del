@@ -1,10 +1,12 @@
 #!/bin/bash
 
-# last update 2017/11/12 by pavroo
+# last update 2018/03/15 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
-if [ "`cat /etc/default/locale | grep es_AR`" != "" ]; then
+if [ "`cat /etc/default/locale | grep de_DE`" != "" ]; then
+. $DEFLOCDIR/de
+elif [ "`cat /etc/default/locale | grep es_AR`" != "" ]; then
 . $DEFLOCDIR/es
 elif [ "`cat /etc/default/locale | grep fr_FR`" != "" ]; then
 . $DEFLOCDIR/fr
@@ -39,11 +41,11 @@ OKEXIT="--button=Ok:0 --button=$LOCAL3:1"
 OKBUTTON="--button=Ok:0"
 ARCHARM="`uname -m | grep arm`"
 
-if [ -f /opt/sparky/sparky-xterm ]
+if [ -f /usr/bin/sparky-terminal ]
 then
-. /opt/sparky/sparky-xterm
+	SPARKYXTERM="sparky-terminal"
 else
-SPARKYXTERM="x-terminal-emulator"
+	SPARKYXTERM="x-terminal-emulator"
 fi
 
 $DIALOG $TEXT"\n$LOCAL16" $TITLE"$LOCAL15" $OKEXIT
