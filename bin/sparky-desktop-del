@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2018/03/15 by pavroo
+# last update 2018/03/29 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -25,7 +25,6 @@ else
 fi
 
 testroot="`whoami`"
-
 if [ "$testroot" != "root" ]
 then
 	echo "Must be root... Exiting now..."
@@ -41,11 +40,12 @@ OKEXIT="--button=Ok:0 --button=$LOCAL3:1"
 OKBUTTON="--button=Ok:0"
 ARCHARM="`uname -m | grep arm`"
 
-if [ -f /usr/bin/sparky-terminal ]
+if [ -f /usr/bin/sparky-xterm ]
 then
-	SPARKYXTERM="sparky-terminal"
+	SPARKYXTERM="/usr/bin/sparky-xterm"
 else
-	SPARKYXTERM="x-terminal-emulator"
+	echo "sparky-xterm is missing... Exiting..."
+	exit 1
 fi
 
 $DIALOG $TEXT"\n$LOCAL16" $TITLE"$LOCAL15" $OKEXIT
@@ -209,8 +209,8 @@ then
 	then
 		exit 0
 	else
-		$SPARKYXTERM -e "apt-get purge sparky-desktop-$PACKAGE -y"
-		$SPARKYXTERM -e "apt-get autoremove -f"
+		$SPARKYXTERM "apt-get purge sparky-desktop-$PACKAGE -y"
+		$SPARKYXTERM "apt-get autoremove"
 	fi
 
 elif [ "$PACKAGE" = "lxde" ]
@@ -232,8 +232,8 @@ then
 	then
 		exit 0
 	else
-		$SPARKYXTERM -e "apt-get purge sparky-desktop-$PACKAGE -y"
-		$SPARKYXTERM -e "apt-get autoremove -f"
+		$SPARKYXTERM "apt-get purge sparky-desktop-$PACKAGE -y"
+		$SPARKYXTERM "apt-get autoremove"
 	fi
 
 elif [ "$PACKAGE" = "lxqt" ]
@@ -255,8 +255,8 @@ then
 	then
 		exit 0
 	else
-		$SPARKYXTERM -e "apt-get purge sparky-desktop-$PACKAGE -y"
-		$SPARKYXTERM -e "apt-get autoremove -f"
+		$SPARKYXTERM "apt-get purge sparky-desktop-$PACKAGE -y"
+		$SPARKYXTERM "apt-get autoremove"
 	fi
 
 else
@@ -277,8 +277,8 @@ else
 	then
 		exit 0
 	else
-		$SPARKYXTERM -e "apt-get purge sparky-desktop-$PACKAGE -y"
-		$SPARKYXTERM -e "apt-get autoremove -f"
+		$SPARKYXTERM "apt-get purge sparky-desktop-$PACKAGE -y"
+		$SPARKYXTERM "apt-get autoremove"
 	fi
 
 fi
