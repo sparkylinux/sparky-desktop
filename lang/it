@@ -1,7 +1,7 @@
 # File di localizzazione italiano per Sparky Desktop Installer
 # Copyright 2016 Carlo Troiani <troianicarlo@gmail.com> 24/03/2016
 # Rilasciato sotto licenza GNU GPL v2
-# Last update 2017/12/14 by pavroo
+# Last update 2018/04/21 by pavroo
 LOCAL1="Nome"
 LOCAL2="Descrizione"
 LOCAL3="Esci"
@@ -28,3 +28,12 @@ LOCAL23="Se tutto è andato bene, il desktop e' stato rimosso dal tuo sistema."
 LOCAL24="Questo Desktop e' un'applicazione sviluppata da terzi e NON e' mantenuta dagli sviluppatori Debian o Sparky, percio' e' possibile che non funzioni correttamente."
 LOCAL25="Altri"
 LOCAL26="I pacchetti Desktop possono esser installati da piu' rpositories:"
+LOCAL27="Remove"
+LOCAL28="Reinstall"
+LOCAL29="Install"
+LOCAL30="This package is already installed."
+LOCAL31="What would you like to do now?"
+LOCAL32="Should I install the package you have chosen?"
+LOCAL33="Something is wrong! \nProbably you have stopped the installation, or your internet connection is broken, or the package is not availabel for you system version.\nCheck it out and try again."
+LOCAL34="Exiting..."
+LOCAL35="The package has been successfully installed."

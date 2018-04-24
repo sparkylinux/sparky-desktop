@@ -1,7 +1,7 @@
 # Polish localization file for Sparky Desktop
 # Copyright 2016 Paweł "pavroo" Pijanowski <pavroo@onet.eu> 2016/03/21
 # Under the GNU GPL v2
-# Last update 2017/12/14 by pavroo
+# Last update 2018/04/21 by pavroo
 LOCAL1="Nazwa"
 LOCAL2="Opis"
 LOCAL3="Wyjście"
@@ -28,3 +28,12 @@ LOCAL23="Jeśli wszystko poszło dobrze, twój pulpit został usunięty z system
 LOCAL24="Ten desktop jest aplikacją z zewnętrznego źródła i NIE jest wspierany przez deweloperów Debiana oraz Sparky, więc jest możliwe, że NIE będzie działał poprawnie."
 LOCAL25="Inne"
 LOCAL26="Pakiety pulpitu mogą być zainstalowane z różnych repozytoriów:"
+LOCAL27="Usuń"
+LOCAL28="Reinstaluj"
+LOCAL29="Zainstaluj"
+LOCAL30="Ten pakiet jest już zainstalowany."
+LOCAL31="Co chcesz teraz zrobić?"
+LOCAL32="Czy mam zainstalować pakiet, który wybrałeś?"
+LOCAL33="Coś poszło źle! \nPrawdopodobnie zatrzymałeś instalację lub połączenie z internetem jest uszkodzone lub ten pakiet nie jest dostępny dla wersji twojego systemu.\nSprawdź to i spróbuj ponownie."
+LOCAL34="Wyjście..."
+LOCAL35="Pakiet został poprawnie zainstalowany."
