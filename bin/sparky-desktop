@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2018/04/21 by pavroo
+# last update 2018/07/26 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -10,6 +10,8 @@ elif [ "`cat /etc/default/locale | grep es_AR`" != "" ]; then
 . $DEFLOCDIR/es
 elif [ "`cat /etc/default/locale | grep fr_FR`" != "" ]; then
 . $DEFLOCDIR/fr
+elif [ "`cat /etc/default/locale | grep id_ID`" != "" ]; then
+. $DEFLOCDIR/id_ID
 elif [ "`cat /etc/default/locale | grep it_IT`" != "" ]; then
 . $DEFLOCDIR/it
 elif [ "`cat /etc/default/locale | grep ja_JP`" != "" ]; then
@@ -385,6 +387,45 @@ elif [ "$1" = "trinity" ]; then
 			$SPARKYXTERM "$INSTALL sparky-desktop-$PACKAGE"
 			$SPARKYXTERM "$INSTALL -f"
 
+			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
+				$DIALOG $TEXT"\n$LOCAL33\n\n$LOCAL34" $TITLE"$LOCAL6" $MSGBOX
+				exit 1
+			fi
+		
+		elif [ "$?" != "0" ]; then
+			exit 1
+		fi
+	fi
+
+elif [ "$1" = "openbox" ]; then
+	if [ -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
+		$DIALOG $TEXT"\n$LOCAL30\n$LOCAL31" $TITLE"$LOCAL6" $BUTTONREMOVE $BUTTONREINSTALL $BUTTONEXIT
+		ret=$?
+		if [[ $ret -eq 3 ]]; then
+			if [ $(pidof "$WMAN") ]; then
+				$DIALOG $TEXT"\n$LOCAL18 $DESKTOP $LOCAL19\n\n$LOCAL20" $TITLE"$LOCAL15" $OKBUTTON
+				exit 1
+			fi
+			# uninstall desktop
+			$SPARKYXTERM "$UNINSTALL sparky-desktop-$PACKAGE"
+			$SPARKYXTERM "$AUTOREMOVE"
+			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
+				$DIALOG $TEXT"\n$LOCAL23" $TITLE"$LOCAL15" $OKBUTTON
+				exit 1
+			fi
+		elif [[ $ret -eq 4 ]]; then
+			# reinstall desktop
+			$SPARKYXTERM "$REINSTALL sparky-desktop-$PACKAGE"
+		else
+			exit 1
+		fi
+	elif [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
+		$DIALOG $TEXT"\n$LOCAL5\n\n$LOCAL11" $TITLE"$LOCAL6" $BUTTONINSTALL $BUTTONEXIT
+		if [ "$?" = "0" ]; then
+			# install desktop
+			$SPARKYXTERM "apt-get update"
+			$SPARKYXTERM "$INSTALL --no-install-recommends sparky-desktop-$PACKAGE obmenu-generator"
+			$SPARKYXTERM "$INSTALL -f"
 			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
 				$DIALOG $TEXT"\n$LOCAL33\n\n$LOCAL34" $TITLE"$LOCAL6" $MSGBOX
 				exit 1
