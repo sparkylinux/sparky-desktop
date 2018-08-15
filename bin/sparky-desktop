@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2018/08/08 by pavroo
+# last update 2018/08/15 17:31 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -71,13 +71,6 @@ else
 fi
 ARCHARM="`uname -m | grep arm`"
 
-# check connection
-PINGTEST=$(ping -c 1 debian.org | grep [0-9])
-if [ "$PINGTEST" = "" ]; then
-	$DIALOG $TITLE"$LOCAL6" $MSGBOX $TEXT"\n$LOCAL4"
-	exit 1
-fi
-
 if [ "$1" = "" ]; then
 	echo "Usage of sparky-desktop is as follows:"
 	echo "sudo sparky-desktop <desktop-name>"
@@ -87,136 +80,200 @@ if [ "$1" = "" ]; then
 	exit 1
 fi
 
+# check connection
+PINGTEST=$(ping -c 1 debian.org | grep [0-9])
+
 # recive desktop name
 case $1 in
   awesome)
 	PACKAGE="awesome"
 	DESKTOP="Awesome"
 	WMAN="awesome"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE ^awesome*"
      ;;
   bspwm)
 	PACKAGE="bspwm"
 	DESKTOP="Bspwm"
 	WMAN="bspwm"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE ^bspwm*"
      ;;
   budgie)
 	PACKAGE="budgie"
 	DESKTOP="Budgie"
 	WMAN="budgie-wm"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE ^budgie*"
      ;;
   cde)
+	if [ "$ARCHARM" != "" ]; then
+		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
+		exit 1
+	fi
 	PACKAGE="cde"
 	DESKTOP="CDE"
 	WMAN="dtsession"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE ^cde-desktop*"
      ;;
   cinnamon)
 	PACKAGE="cinnamon"
 	DESKTOP="Cinnamon"
 	WMAN="cinnamon"
-     ;;
-  deepin)
-	PACKAGE="deepin"
-	DESKTOP="Deepin"
-	WMAN="deepin-wm"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE ^cinnamon*"
      ;;
   enlightenment)
 	PACKAGE="enlightenment"
 	DESKTOP="Enlightenment"
 	WMAN="enlightenment"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE ^efl* ^enlightenment*"
      ;;
   fluxbox)
 	PACKAGE="fluxbox"
 	DESKTOP="Fluxbox"
 	WMAN="fluxbox"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	if [ -d /usr/share/doc/sparky-desktop-lumina ]; then
+		REMPACKS="sparky-desktop-$PACKAGE fluxbox-theme-sparky"
+	else
+		REMPACKS="sparky-desktop-$PACKAGE ^fluxbox*"
+	fi
      ;;
   gnomeflashback)
 	PACKAGE="gnome-flashback"
 	DESKTOP="GNOME Flashback"
 	WMAN="metacity"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE gnome-flashback gnome-flashback-common gnome-panel gnome-session-flashback"
      ;;
   gnomeshell)
 	PACKAGE="gnome-shell"
 	DESKTOP="GNOME Shell"
 	WMAN="gnome-shell"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE gnome-session gnome-shell"
      ;;
   i3)
 	PACKAGE="i3"
 	DESKTOP="i3"
 	WMAN="i3"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE i3 i3-wm i3status sparky-conky-i3"
      ;;
   icewm)
 	PACKAGE="icewm"
 	DESKTOP="IceWM"
 	WMAN="icewm"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE ^icewm*"
      ;;
   jwm)
 	PACKAGE="jwm"
 	DESKTOP="JWM"
 	WMAN="jwm"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE ^jwm*"
      ;;
   kde)
 	PACKAGE="kde"
 	DESKTOP="KDE Plasma"
 	WMAN="kwin_x11"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE ^plasma*"
      ;;
   lumina)
 	PACKAGE="lumina"
 	DESKTOP="Lumina"
 	WMAN="lumina-desktop"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	#if [ -d /usr/share/doc/sparky-desktop-fluxbox ]; then
+		REMPACKS="sparky-desktop-$PACKAGE ^lumina*"
+	#else
+	#	REMPACKS="sparky-desktop-$PACKAGE ^lumina* fluxbox"
+	#fi
      ;;
   lxde)
 	PACKAGE="lxde"
 	DESKTOP="LXDE"
 	WMAN="lxsession"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE lxappearance lxde-common lxsession lxsession-logout openbox-lxde-session"
      ;;
   lxqt)
 	PACKAGE="lxqt"
 	DESKTOP="LXQt"
 	WMAN="lxqt-session"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE ^lxqt*"
      ;;
   manokwari)
 	PACKAGE="manokwari"
 	DESKTOP="Manokwari"
 	WMAN="manokwari"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE ^manokwari*"
      ;;
   mate)
 	PACKAGE="mate"
 	DESKTOP="MATE"
 	WMAN="marco"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE ^mate*"
      ;;
   openbox)
 	if [ "$ARCHARM" != "" ]; then
 		PACKAGE="openbox-arm"
+		INSPACKS="sparky-desktop-$PACKAGE"
+		REMPACKS="sparky-desktop-$PACKAGE ^openbox*"
 	else
 		PACKAGE="openbox"
+		INSPACKS="sparky-desktop-$PACKAGE obmenu-generator"
+		REMPACKS="sparky-desktop-$PACKAGE ^openbox*"
 	fi
 	DESKTOP="Openbox"
 	WMAN="openbox"
      ;;
   pantheon)
+	if [ "$ARCHARM" != "" ]; then
+		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
+		exit 1
+	fi
 	PACKAGE="pantheon"
 	DESKTOP="Pantheon"
 	WMAN="gala"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE ^pantheon*"
      ;;
   pekwm)
 	PACKAGE="pekwm"
 	DESKTOP="PekWM"
 	WMAN="pekwm"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE ^pekwm*"
      ;;
   trinity)
 	PACKAGE="trinity"
 	DESKTOP="Trinity"
 	WMAN="twin"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE ^trinity* ^tde*"
      ;;
   wmaker)
 	PACKAGE="wmaker"
 	DESKTOP="WindowMaker"
 	WMAN="wmaker"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE ^wmaker*"
      ;;
   xfce)
 	PACKAGE="xfce"
 	DESKTOP="Xfce"
 	WMAN="xfwm4"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE ^xfce4*"
      ;;
 esac
 
@@ -239,80 +296,48 @@ fi
 
 # install, reinstall or remove a desktop now
 # no arm = cde, pantheon
-if [ "$1" = "cde" ]; then
-	if [ "$ARCHARM" != "" ]; then
-		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
-	fi
 
+if [ "$1" = "pantheon" ]; then
 	if [ -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
 		$DIALOG $TEXT"\n$LOCAL30\n$LOCAL31" $TITLE"$LOCAL6" $BUTTONREMOVE $BUTTONREINSTALL $BUTTONEXIT
 		ret=$?
 		if [[ $ret -eq 3 ]]; then
 			if [ $(pidof "$WMAN") ]; then
 				$DIALOG $TEXT"\n$LOCAL18 $DESKTOP $LOCAL19\n\n$LOCAL20" $TITLE"$LOCAL15" $OKBUTTON
+				NEWCONFIG="no"
 				exit 1
 			fi
 			# uninstall desktop
-			$SPARKYXTERM "$UNINSTALL sparky-desktop-$PACKAGE"
+			$SPARKYXTERM "$UNINSTALL $REMPACKS"
 			$SPARKYXTERM "$AUTOREMOVE"
 			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
+				NEWCONFIG="no"
+				rm -f /etc/apt/sources.list.d/pantheon-debian.list
+				$SPARKYXTERM "apt-get update"
 				$DIALOG $TEXT"\n$LOCAL23" $TITLE"$LOCAL15" $OKBUTTON
 				exit 1
 			fi
 		elif [[ $ret -eq 4 ]]; then
 			# reinstall desktop
+			if [ "$PINGTEST" = "" ]; then
+				$DIALOG $TITLE"$LOCAL6" $MSGBOX $TEXT"\n$LOCAL4"
+				NEWCONFIG="no"
+				exit 1
+			fi
 			$SPARKYXTERM "$REINSTALL sparky-desktop-$PACKAGE"
 		else
+			NEWCONFIG="no"
 			exit 1
 		fi
 	elif [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
 		$DIALOG $TEXT"\n$LOCAL5\n\n$LOCAL11" $TITLE"$LOCAL6" $BUTTONINSTALL $BUTTONEXIT
 		if [ "$?" = "0" ]; then
 			# install desktop
-			$SPARKYXTERM "apt-get update"
-			$SPARKYXTERM "$INSTALL sparky-desktop-$PACKAGE"
-			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
-				$DIALOG $TEXT"\n$LOCAL33\n\n$LOCAL34" $TITLE"$LOCAL6" $MSGBOX
+			if [ "$PINGTEST" = "" ]; then
+				$DIALOG $TITLE"$LOCAL6" $MSGBOX $TEXT"\n$LOCAL4"
+				NEWCONFIG="no"
 				exit 1
 			fi
-		
-		elif [ "$?" != "0" ]; then
-			exit 1
-		fi
-	fi
-
-elif [ "$1" = "pantheon" ]; then
-	if [ "$ARCHARM" != "" ]; then
-		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
-		exit 1
-	fi
-
-	if [ -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
-		$DIALOG $TEXT"\n$LOCAL30\n$LOCAL31" $TITLE"$LOCAL6" $BUTTONREMOVE $BUTTONREINSTALL $BUTTONEXIT
-		ret=$?
-		if [[ $ret -eq 3 ]]; then
-			if [ $(pidof "$WMAN") ]; then
-				$DIALOG $TEXT"\n$LOCAL18 $DESKTOP $LOCAL19\n\n$LOCAL20" $TITLE"$LOCAL15" $OKBUTTON
-				exit 1
-			fi
-			# uninstall desktop
-			$SPARKYXTERM "$UNINSTALL sparky-desktop-$PACKAGE"
-			$SPARKYXTERM "$AUTOREMOVE"
-			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
-				$DIALOG $TEXT"\n$LOCAL23" $TITLE"$LOCAL15" $OKBUTTON
-				exit 1
-			fi
-		elif [[ $ret -eq 4 ]]; then
-			# reinstall desktop
-			$SPARKYXTERM "$REINSTALL sparky-desktop-$PACKAGE"
-		else
-			exit 1
-		fi
-	elif [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
-		$DIALOG $TEXT"\n$LOCAL5\n\n$LOCAL11" $TITLE"$LOCAL6" $BUTTONINSTALL $BUTTONEXIT
-		if [ "$?" = "0" ]; then
-			# install desktop
 			if [ "$SPARKYVERCHECK5" != "" ] || [ "$DEBIANVERCHECK10" != "" ]; then
 				if [ -f /etc/apt/sources.list.d/pantheon-debian.list ]; then
 					rm -f /etc/apt/sources.list.d/pantheon-debian.list
@@ -320,7 +345,7 @@ elif [ "$1" = "pantheon" ]; then
 				echo "deb http://gandalfn.ovh/debian testing-daily main contrib" > /etc/apt/sources.list.d/pantheon-debian.list
 				$SPARKYXTERM "wget http://gandalfn.ovh/debian/pantheon-debian.gpg.key -O- | apt-key add -"
 				$SPARKYXTERM "apt-get update"
-				$SPARKYXTERM "$INSTALL sparky-desktop-$PACKAGE"
+				$SPARKYXTERM "$INSTALL $INSPACKS"
 				$SPARKYXTERM "$INSTALL -f"
 			elif [ "$SPARKYVERCHECK4" != "" ] || [ "$DEBIANVERCHECK9" != "" ]; then
 				if [ -f /etc/apt/sources.list.d/pantheon-debian.list ]; then
@@ -329,16 +354,20 @@ elif [ "$1" = "pantheon" ]; then
 				echo "deb http://gandalfn.ovh/debian stretch-loki main contrib" > /etc/apt/sources.list.d/pantheon-debian.list
 				$SPARKYXTERM "wget http://gandalfn.ovh/debian/pantheon-debian.gpg.key -O- | apt-key add -"
 				$SPARKYXTERM "apt-get update"
-				$SPARKYXTERM "$INSTALL sparky-desktop-$PACKAGE"
+				$SPARKYXTERM "$INSTALL $INSPACKS"
 				$SPARKYXTERM "$INSTALL -f"
 			fi
 
 			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
 				$DIALOG $TEXT"\n$LOCAL33\n\n$LOCAL34" $TITLE"$LOCAL6" $MSGBOX
+				NEWCONFIG="no"
 				exit 1
+			elif [ -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
+				NEWCONFIG="yes"
 			fi
 		
 		elif [ "$?" != "0" ]; then
+			NEWCONFIG="no"
 			exit 1
 		fi
 	fi
@@ -350,25 +379,40 @@ elif [ "$1" = "trinity" ]; then
 		if [[ $ret -eq 3 ]]; then
 			if [ $(pidof "$WMAN") ]; then
 				$DIALOG $TEXT"\n$LOCAL18 $DESKTOP $LOCAL19\n\n$LOCAL20" $TITLE"$LOCAL15" $OKBUTTON
+				NEWCONFIG="no"
 				exit 1
 			fi
 			# uninstall desktop
-			$SPARKYXTERM "$UNINSTALL sparky-desktop-$PACKAGE"
+			$SPARKYXTERM "$UNINSTALL $REMPACKS"
 			$SPARKYXTERM "$AUTOREMOVE"
 			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
+				NEWCONFIG="no"
+				rm -f /etc/apt/sources.list.d/trinity.list
+				$SPARKYXTERM "apt-get update"
 				$DIALOG $TEXT"\n$LOCAL23" $TITLE"$LOCAL15" $OKBUTTON
 				exit 1
 			fi
 		elif [[ $ret -eq 4 ]]; then
 			# reinstall desktop
+			if [ "$PINGTEST" = "" ]; then
+				$DIALOG $TITLE"$LOCAL6" $MSGBOX $TEXT"\n$LOCAL4"
+				NEWCONFIG="no"
+				exit 1
+			fi
 			$SPARKYXTERM "$REINSTALL sparky-desktop-$PACKAGE"
 		else
+			NEWCONFIG="no"
 			exit 1
 		fi
 	elif [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
 		$DIALOG $TEXT"\n$LOCAL5\n\n$LOCAL11" $TITLE"$LOCAL6" $BUTTONINSTALL $BUTTONEXIT
 		if [ "$?" = "0" ]; then
 			# install desktop
+			if [ "$PINGTEST" = "" ]; then
+				$DIALOG $TITLE"$LOCAL6" $MSGBOX $TEXT"\n$LOCAL4"
+				NEWCONFIG="no"
+				exit 1
+			fi
 			if [ -f /etc/apt/sources.list.d/trinity.list ]; then
 				rm -f /etc/apt/sources.list.d/trinity.list
 			fi
@@ -384,132 +428,19 @@ elif [ "$1" = "trinity" ]; then
 				echo "deb-src http://mirror.xcer.cz/trinity-sb $TDEREPO deps-r14 main-r14" >> /etc/apt/sources.list.d/trinity.list
 			fi	
 			$SPARKYXTERM "apt-get update"
-			$SPARKYXTERM "$INSTALL sparky-desktop-$PACKAGE"
+			$SPARKYXTERM "$INSTALL $INSPACKS"
 			$SPARKYXTERM "$INSTALL -f"
 
 			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
 				$DIALOG $TEXT"\n$LOCAL33\n\n$LOCAL34" $TITLE"$LOCAL6" $MSGBOX
+				NEWCONFIG="no"
 				exit 1
+			elif [ -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
+				NEWCONFIG="yes"
 			fi
 		
 		elif [ "$?" != "0" ]; then
-			exit 1
-		fi
-	fi
-
-elif [ "$1" = "openbox" ]; then
-	if [ -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
-		$DIALOG $TEXT"\n$LOCAL30\n$LOCAL31" $TITLE"$LOCAL6" $BUTTONREMOVE $BUTTONREINSTALL $BUTTONEXIT
-		ret=$?
-		if [[ $ret -eq 3 ]]; then
-			if [ $(pidof "$WMAN") ]; then
-				$DIALOG $TEXT"\n$LOCAL18 $DESKTOP $LOCAL19\n\n$LOCAL20" $TITLE"$LOCAL15" $OKBUTTON
-				exit 1
-			fi
-			# uninstall desktop
-			$SPARKYXTERM "$UNINSTALL sparky-desktop-$PACKAGE obmenu-generator obconf openbox"
-			$SPARKYXTERM "$AUTOREMOVE"
-			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
-				$DIALOG $TEXT"\n$LOCAL23" $TITLE"$LOCAL15" $OKBUTTON
-				exit 1
-			fi
-		elif [[ $ret -eq 4 ]]; then
-			# reinstall desktop
-			$SPARKYXTERM "$REINSTALL sparky-desktop-$PACKAGE"
-		else
-			exit 1
-		fi
-	elif [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
-		$DIALOG $TEXT"\n$LOCAL5\n\n$LOCAL11" $TITLE"$LOCAL6" $BUTTONINSTALL $BUTTONEXIT
-		if [ "$?" = "0" ]; then
-			# install desktop
-			$SPARKYXTERM "apt-get update"
-			$SPARKYXTERM "$INSTALL --no-install-recommends sparky-desktop-$PACKAGE obmenu-generator"
-			$SPARKYXTERM "$INSTALL -f"
-			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
-				$DIALOG $TEXT"\n$LOCAL33\n\n$LOCAL34" $TITLE"$LOCAL6" $MSGBOX
-				exit 1
-			fi
-		
-		elif [ "$?" != "0" ]; then
-			exit 1
-		fi
-	fi
-
-elif [ "$1" = "lxde" ]; then
-	if [ -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
-		$DIALOG $TEXT"\n$LOCAL30\n$LOCAL31" $TITLE"$LOCAL6" $BUTTONREMOVE $BUTTONREINSTALL $BUTTONEXIT
-		ret=$?
-		if [[ $ret -eq 3 ]]; then
-			if [ $(pidof "$WMAN") ]; then
-				$DIALOG $TEXT"\n$LOCAL18 $DESKTOP $LOCAL19\n\n$LOCAL20" $TITLE"$LOCAL15" $OKBUTTON
-				exit 1
-			fi
-			# uninstall desktop
-			$SPARKYXTERM "$UNINSTALL sparky-desktop-$PACKAGE lxappearance lxde-common lxsession lxsession-logout openbox-lxde-session"
-			$SPARKYXTERM "$AUTOREMOVE"
-			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
-				$DIALOG $TEXT"\n$LOCAL23" $TITLE"$LOCAL15" $OKBUTTON
-				exit 1
-			fi
-		elif [[ $ret -eq 4 ]]; then
-			# reinstall desktop
-			$SPARKYXTERM "$REINSTALL sparky-desktop-$PACKAGE"
-		else
-			exit 1
-		fi
-	elif [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
-		$DIALOG $TEXT"\n$LOCAL5\n\n$LOCAL11" $TITLE"$LOCAL6" $BUTTONINSTALL $BUTTONEXIT
-		if [ "$?" = "0" ]; then
-			# install desktop
-			$SPARKYXTERM "apt-get update"
-			$SPARKYXTERM "$INSTALL --no-install-recommends sparky-desktop-$PACKAGE"
-			$SPARKYXTERM "$INSTALL -f"
-			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
-				$DIALOG $TEXT"\n$LOCAL33\n\n$LOCAL34" $TITLE"$LOCAL6" $MSGBOX
-				exit 1
-			fi
-		
-		elif [ "$?" != "0" ]; then
-			exit 1
-		fi
-	fi
-
-elif [ "$1" = "lxqt" ]; then
-	if [ -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
-		$DIALOG $TEXT"\n$LOCAL30\n$LOCAL31" $TITLE"$LOCAL6" $BUTTONREMOVE $BUTTONREINSTALL $BUTTONEXIT
-		ret=$?
-		if [[ $ret -eq 3 ]]; then
-			if [ $(pidof "$WMAN") ]; then
-				$DIALOG $TEXT"\n$LOCAL18 $DESKTOP $LOCAL19\n\n$LOCAL20" $TITLE"$LOCAL15" $OKBUTTON
-				exit 1
-			fi
-			# uninstall desktop
-			$SPARKYXTERM "$UNINSTALL sparky-desktop-$PACKAGE lximage-qt lxqt-about lxqt-admin lxqt-config lxqt-core lxqt-globalkeys lxqt-notificationd lxqt-openssh-askpass lxqt-policykit lxqt-qtplugin lxqt-panel lxqt-session lxqt-sudo qterminal sparky-lxqt-theme"
-			$SPARKYXTERM "$AUTOREMOVE"
-			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
-				$DIALOG $TEXT"\n$LOCAL23" $TITLE"$LOCAL15" $OKBUTTON
-				exit 1
-			fi
-		elif [[ $ret -eq 4 ]]; then
-			# reinstall desktop
-			$SPARKYXTERM "$REINSTALL sparky-desktop-$PACKAGE"
-		else
-			exit 1
-		fi
-	elif [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
-		$DIALOG $TEXT"\n$LOCAL5\n\n$LOCAL11" $TITLE"$LOCAL6" $BUTTONINSTALL $BUTTONEXIT
-		if [ "$?" = "0" ]; then
-			# install desktop
-			$SPARKYXTERM "apt-get update"
-			$SPARKYXTERM "$INSTALL --no-install-recommends sparky-desktop-$PACKAGE"
-			$SPARKYXTERM "$INSTALL -f"
-			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
-				$DIALOG $TEXT"\n$LOCAL33\n\n$LOCAL34" $TITLE"$LOCAL6" $MSGBOX
-				exit 1
-			fi
-		
-		elif [ "$?" != "0" ]; then
+			NEWCONFIG="no"
 			exit 1
 		fi
 	fi
@@ -521,38 +452,58 @@ else
 		if [[ $ret -eq 3 ]]; then
 			if [ $(pidof "$WMAN") ]; then
 				$DIALOG $TEXT"\n$LOCAL18 $DESKTOP $LOCAL19\n\n$LOCAL20" $TITLE"$LOCAL15" $OKBUTTON
+				NEWCONFIG="no"
 				exit 1
 			fi
 			# uninstall desktop
-			$SPARKYXTERM "$UNINSTALL sparky-desktop-$PACKAGE"
+			$SPARKYXTERM "$UNINSTALL $REMPACKS"
 			$SPARKYXTERM "$AUTOREMOVE"
 			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
+				NEWCONFIG="no"
 				$DIALOG $TEXT"\n$LOCAL23" $TITLE"$LOCAL15" $OKBUTTON
 				exit 1
 			fi
 		elif [[ $ret -eq 4 ]]; then
 			# reinstall desktop
+			if [ "$PINGTEST" = "" ]; then
+				$DIALOG $TITLE"$LOCAL6" $MSGBOX $TEXT"\n$LOCAL4"
+				NEWCONFIG="no"
+				exit 1
+			fi
 			$SPARKYXTERM "$REINSTALL sparky-desktop-$PACKAGE"
+			NEWCONFIG="yes"
 		else
+			NEWCONFIG="no"
 			exit 1
 		fi
 	elif [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
 		$DIALOG $TEXT"\n$LOCAL5\n\n$LOCAL11" $TITLE"$LOCAL6" $BUTTONINSTALL $BUTTONEXIT
 		if [ "$?" = "0" ]; then
 			# install desktop
+			if [ "$PINGTEST" = "" ]; then
+				$DIALOG $TITLE"$LOCAL6" $MSGBOX $TEXT"\n$LOCAL4"
+				NEWCONFIG="no"
+				exit 1
+			fi
 			$SPARKYXTERM "apt-get update"
-			$SPARKYXTERM "$INSTALL --no-install-recommends sparky-desktop-$PACKAGE"
+			$SPARKYXTERM "$INSTALL --no-install-recommends $INSPACKS"
 			$SPARKYXTERM "$INSTALL -f"
 			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
 				$DIALOG $TEXT"\n$LOCAL33\n\n$LOCAL34" $TITLE"$LOCAL6" $MSGBOX
+				NEWCONFIG="no"
 				exit 1
+			elif [ -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
+				NEWCONFIG="yes"
 			fi
 		
 		elif [ "$?" != "0" ]; then
+			NEWCONFIG="no"
 			exit 1
 		fi
 	fi
 fi
+
+if [ "$NEWCONFIG" = "yes" ]; then
 
 # get user name to copy the desktop configs to	
 if [ "$USER1001" != "" ] && [ "$USER1002" != "" ]; then
@@ -1769,6 +1720,8 @@ elif [ "$DESKTOPCHECK" = "1" ]; then
 else
 	echo "It shoudn't happen, report it to Sparky forums, please..."
 	exit 0
+fi
+
 fi
 
 exit 0
