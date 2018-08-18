@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2018/08/15 17:31 by pavroo
+# last update 2018/08/19 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -168,7 +168,7 @@ case $1 in
 	DESKTOP="IceWM"
 	WMAN="icewm"
 	INSPACKS="sparky-desktop-$PACKAGE"
-	REMPACKS="sparky-desktop-$PACKAGE ^icewm*"
+	REMPACKS="sparky-desktop-$PACKAGE icewm icewm-common icewm-theme-sparky"
      ;;
   jwm)
 	PACKAGE="jwm"
@@ -200,7 +200,7 @@ case $1 in
 	DESKTOP="LXDE"
 	WMAN="lxsession"
 	INSPACKS="sparky-desktop-$PACKAGE"
-	REMPACKS="sparky-desktop-$PACKAGE lxappearance lxde-common lxsession lxsession-logout openbox-lxde-session"
+	REMPACKS="sparky-desktop-$PACKAGE lxappearance lxde-common lxde-core lxpanel lxsession lxsession-logout openbox-lxde-session"
      ;;
   lxqt)
 	PACKAGE="lxqt"
@@ -1286,6 +1286,7 @@ elif [ "$1" = "lxqt" ]; then
 			mkdir -p /home/$TARGETUSER/.config/openbox
 		fi
 		cp /usr/share/sparky-desktop-data/lxqt/skel/.config/openbox/rc.xml /home/$TARGETUSER/.config/openbox/rc.xml
+		cp /usr/share/sparky-desktop-data/lxqt/skel/.config/openbox/lxqt-rc.xml /home/$TARGETUSER/.config/openbox/lxqt-rc.xml
 		
 		if [ -d /home/$TARGETUSER/.config/pcmanfm-qt ]; then
 			rm -rf /home/$TARGETUSER/.config/pcmanfm-qt
