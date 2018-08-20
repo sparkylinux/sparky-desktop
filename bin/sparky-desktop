@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2018/08/19 by pavroo
+# last update 2018/08/19 22:38 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -129,7 +129,7 @@ case $1 in
 	DESKTOP="Enlightenment"
 	WMAN="enlightenment"
 	INSPACKS="sparky-desktop-$PACKAGE"
-	REMPACKS="sparky-desktop-$PACKAGE ^efl* ^enlightenment*"
+	REMPACKS="sparky-desktop-$PACKAGE efl enlightenment"
      ;;
   fluxbox)
 	PACKAGE="fluxbox"
@@ -1315,6 +1315,12 @@ elif [ "$1" = "manokwari" ]; then
 		if [ ! -d /home/$TARGETUSER/.config ]; then
 			mkdir -p /home/$TARGETUSER/.config
 		fi
+
+		if [ -d /home/$TARGETUSER/.config/dconf ]; then
+			rm -rf /home/$TARGETUSER/.config/dconf
+		fi
+		rsync -a /usr/share/sparky-desktop-data/manokwari/skel/.config/dconf /home/$TARGETUSER/.config/
+
 		if [ -f /home/$TARGETUSER/.config/Trolltech.conf ]; then
 			rm -f /home/$TARGETUSER/.config/Trolltech.conf
 		fi
