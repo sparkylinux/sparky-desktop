@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2018/08/19 22:38 by pavroo
+# last update 2018/08/23 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -313,6 +313,7 @@ if [ "$1" = "pantheon" ]; then
 			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
 				NEWCONFIG="no"
 				rm -f /etc/apt/sources.list.d/pantheon-debian.list
+				rm -f /etc/apt/sources.list.d/appcenter.list
 				$SPARKYXTERM "apt-get update"
 				$DIALOG $TEXT"\n$LOCAL23" $TITLE"$LOCAL15" $OKBUTTON
 				exit 1
