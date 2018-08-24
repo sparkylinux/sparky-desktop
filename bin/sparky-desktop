@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2018/08/23 by pavroo
+# last update 2018/08/24 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -169,6 +169,13 @@ case $1 in
 	WMAN="icewm"
 	INSPACKS="sparky-desktop-$PACKAGE"
 	REMPACKS="sparky-desktop-$PACKAGE icewm icewm-common icewm-theme-sparky"
+     ;;
+  jade)
+	PACKAGE="jade"
+	DESKTOP="Jade"
+	WMAN="blackbox"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE jadesktop jade-menu-data jade-application-kit"
      ;;
   jwm)
 	PACKAGE="jwm"
