@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2018/08/25 by pavroo
+# last update 2018/08/27 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -161,7 +161,7 @@ case $1 in
 	DESKTOP="i3"
 	WMAN="i3"
 	INSPACKS="sparky-desktop-$PACKAGE"
-	REMPACKS="sparky-desktop-$PACKAGE i3 i3-wm i3status sparky-conky-i3"
+	REMPACKS="sparky-desktop-$PACKAGE i3 i3-wm i3blocks sparky-conky-i3"
      ;;
   icewm)
 	PACKAGE="icewm"
@@ -923,6 +923,12 @@ elif [ "$1" = "i3" ]; then
 		fi
 		mkdir -p /home/$TARGETUSER/.config/i3
 		rsync -a /usr/share/sparky-desktop-data/i3/skel/.config/i3 /home/$TARGETUSER/.config/
+
+		if [ -f /home/$TARGETUSER/.i3blocks.conf ]; then
+			rm -f /home/$TARGETUSER/.i3blocks.conf
+		fi
+		cp /usr/share/sparky-desktop-data/i3/skel/.i3blocks.conf /home/$TARGETUSER/.i3blocks.conf
+		chown $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.i3blocks.conf
 
 		if [ -d /home/$TARGETUSER/.config/lxterminal ]; then
 			rm -rf /home/$TARGETUSER/.config/lxterminal
