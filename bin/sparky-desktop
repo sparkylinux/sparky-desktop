@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2018/09/05 by pavroo
+# last update 2018/09/12 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -161,7 +161,7 @@ case $1 in
 	DESKTOP="i3"
 	WMAN="i3"
 	INSPACKS="sparky-desktop-$PACKAGE"
-	REMPACKS="sparky-desktop-$PACKAGE i3 i3-wm i3blocks sparky-conky-i3"
+	REMPACKS="sparky-desktop-$PACKAGE i3 i3-wm i3blocks sparky-conky-i3 dunst rofi"
      ;;
   icewm)
 	PACKAGE="icewm"
@@ -935,6 +935,11 @@ elif [ "$1" = "i3" ]; then
 		fi
 		cp /usr/share/sparky-desktop-data/i3/skel/.Xresources /home/$TARGETUSER/.Xresources
 		chown $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.Xresources
+
+		if [ -f /home/$TARGETUSER/.config/dunst/dunstrc ]; then
+			rm -f /home/$TARGETUSER/.config/dunst/dunstrc
+		fi
+		cp /usr/share/sparky-desktop-data/i3/skel/.config/dunst/dunstrc /home/$TARGETUSER/.config/dunst/dunstrc
 
 		if [ -d /home/$TARGETUSER/.config/lxterminal ]; then
 			rm -rf /home/$TARGETUSER/.config/lxterminal
