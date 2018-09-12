@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2018/09/12 by pavroo
+# last update 2018/09/12 23:32 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -936,9 +936,10 @@ elif [ "$1" = "i3" ]; then
 		cp /usr/share/sparky-desktop-data/i3/skel/.Xresources /home/$TARGETUSER/.Xresources
 		chown $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.Xresources
 
-		if [ -f /home/$TARGETUSER/.config/dunst/dunstrc ]; then
-			rm -f /home/$TARGETUSER/.config/dunst/dunstrc
+		if [ -d /home/$TARGETUSER/.config/dunst ]; then
+			rm -rf /home/$TARGETUSER/.config/dunst
 		fi
+		mkdir -p /home/$TARGETUSER/.config/dunst
 		cp /usr/share/sparky-desktop-data/i3/skel/.config/dunst/dunstrc /home/$TARGETUSER/.config/dunst/dunstrc
 
 		if [ -d /home/$TARGETUSER/.config/lxterminal ]; then
