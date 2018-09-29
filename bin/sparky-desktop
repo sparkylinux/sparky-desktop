@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2018/09/12 23:32 by pavroo
+# last update 2018/09/29 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -494,7 +494,7 @@ else
 				exit 1
 			fi
 			$SPARKYXTERM "apt-get update"
-			$SPARKYXTERM "$INSTALL --no-install-recommends $INSPACKS"
+			$SPARKYXTERM "$INSTALL $INSPACKS"
 			$SPARKYXTERM "$INSTALL -f"
 			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
 				$DIALOG $TEXT"\n$LOCAL33\n\n$LOCAL34" $TITLE"$LOCAL6" $MSGBOX
