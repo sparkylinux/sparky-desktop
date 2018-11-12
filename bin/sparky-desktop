@@ -594,7 +594,7 @@ elif [ "$1" = "bspwm" ]; then
 		rsync -a /usr/share/sparky-desktop-data/bspwm/skel/.config/sxhkd /home/$TARGETUSER/.config/
 
 		if [ -d /home/$TARGETUSER/.config/kupfer ]; then
-			rm -rf /home/$TARGETUSER/.config/kupher
+			rm -rf /home/$TARGETUSER/.config/kupfer
 		fi
 		mkdir -p /home/$TARGETUSER/.config/kupfer
 		rsync -a /usr/share/sparky-desktop-data/bspwm/skel/.config/kupfer /home/$TARGETUSER/.config/
