@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2018/11/12 by pavroo
+# last update 2018/11/13 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -161,7 +161,7 @@ case $1 in
 	DESKTOP="i3"
 	WMAN="i3"
 	INSPACKS="sparky-desktop-$PACKAGE"
-	REMPACKS="sparky-desktop-$PACKAGE i3 i3-wm i3blocks sparky-conky-i3 dunst rofi"
+	REMPACKS="sparky-desktop-$PACKAGE i3-wm i3blocks i3lock-fancy sparky-conky-i3 rofi"
      ;;
   icewm)
 	PACKAGE="icewm"
@@ -280,7 +280,7 @@ case $1 in
 	DESKTOP="Xfce"
 	WMAN="xfwm4"
 	INSPACKS="sparky-desktop-$PACKAGE"
-	REMPACKS="sparky-desktop-$PACKAGE ^xfce4*"
+	REMPACKS="sparky-desktop-$PACKAGE xfce4 xfce4-datetime-plugin xfce4-screenshooter xfce4-taskmanager xfce4-terminal xfce4-whiskermenu-plugin xfce4-xkb-plugin"
      ;;
 esac
 
