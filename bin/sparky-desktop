@@ -161,7 +161,7 @@ case $1 in
 	DESKTOP="i3"
 	WMAN="i3"
 	INSPACKS="sparky-desktop-$PACKAGE"
-	REMPACKS="sparky-desktop-$PACKAGE i3-wm i3blocks i3lock-fancy sparky-conky-i3 rofi"
+	REMPACKS="sparky-desktop-$PACKAGE i3-wm i3blocks sparky-conky-i3 rofi"
      ;;
   icewm)
 	PACKAGE="icewm"
