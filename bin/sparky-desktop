@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2018/12/14 by pavroo
+# last update 2019/02/24 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -35,7 +35,6 @@ fi
 DIALOG="`which yad` --width=450 --height=250 --window-icon=preferences-desktop-display --image=preferences-desktop-display"
 TEXT="--text="
 TITLE="--title="
-#ENTRY="--entry"
 MENU="--list --column=$LOCAL1 --column=$LOCAL2"
 OKEXIT="--button=Ok:0 --button=$LOCAL3:1"
 OKBUTTON="--button=Ok:0"
@@ -438,6 +437,8 @@ elif [ "$1" = "trinity" ]; then
 			$SPARKYXTERM "apt-get update"
 			$SPARKYXTERM "$INSTALL $INSPACKS"
 			$SPARKYXTERM "$INSTALL -f"
+			$SPARKYXTERM "$UNINSTALL tdm-trinity -y"
+			$SPARKYXTERM "dpkg-reconfigure lightdm"
 
 			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
 				$DIALOG $TEXT"\n$LOCAL33\n\n$LOCAL34" $TITLE"$LOCAL6" $MSGBOX
