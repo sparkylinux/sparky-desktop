@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2019/04/08 by pavroo
+# last update 2019/05/25 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -84,6 +84,16 @@ fi
 # check connection
 PINGTEST=$(ping -c 1 debian.org | grep [0-9])
 
+# checking Debian stable 8 Jessie
+#OLDSTABLECHECK1="`cat /etc/issue | grep 8`"
+# checking Sparky 3 Annagerman based on Debian stable 8
+#OLDSTABLECHECK2="`cat /etc/issue | grep 3`"
+# checking Debian 9/10 and Sparky 4/5
+SPARKYVERCHECK5="`cat /etc/issue | grep 5`"
+SPARKYVERCHECK4="`cat /etc/issue | grep 4`"
+DEBIANVERCHECK10="`cat /etc/issue | grep buster`"
+DEBIANVERCHECK9="`cat /etc/issue | grep stretch`"
+
 # recive desktop name
 case $1 in
   awesome)
@@ -124,6 +134,21 @@ case $1 in
 	WMAN="cinnamon"
 	INSPACKS="sparky-desktop-$PACKAGE"
 	REMPACKS="sparky-desktop-$PACKAGE ^cinnamon*"
+     ;;
+  draco)
+	if [ "$ARCHARM" != "" ]; then
+		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
+		exit 1
+	fi
+	if [ "$SPARKYVERCHECK4" != "" ] || [ "$DEBIANVERCHECK9" ]; then
+		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
+		exit 1
+	fi
+	PACKAGE="draco"
+	DESKTOP="Draco"
+	WMAN="start-draco"
+	INSPACKS="sparky-desktop-$PACKAGE"
+	REMPACKS="sparky-desktop-$PACKAGE draco-desktop"
      ;;
   enlightenment)
 	PACKAGE="enlightenment"
@@ -285,15 +310,6 @@ case $1 in
      ;;
 esac
 
-# checking Debian stable 8 Jessie
-#OLDSTABLECHECK1="`cat /etc/issue | grep 8`"
-# checking Sparky 3 Annagerman based on Debian stable 8
-#OLDSTABLECHECK2="`cat /etc/issue | grep 3`"
-# checking Debian 9/10 and Sparky 4/5
-SPARKYVERCHECK5="`cat /etc/issue | grep 5`"
-SPARKYVERCHECK4="`cat /etc/issue | grep 4`"
-DEBIANVERCHECK10="`cat /etc/issue | grep buster`"
-DEBIANVERCHECK9="`cat /etc/issue | grep stretch`"
 if [ "$SPARKYVERCHECK5" != "" ] || [ "$DEBIANVERCHECK10" != "" ]; then
 	TDEREPO="buster"
 elif [ "$SPARKYVERCHECK4" != "" ] || [ "$DEBIANVERCHECK9" != "" ]; then
