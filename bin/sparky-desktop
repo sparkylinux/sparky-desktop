@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2019/05/25 by pavroo
+# last update 2019/06/02 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -319,7 +319,7 @@ else
 fi
 
 # install, reinstall or remove a desktop now
-# no arm = cde, pantheon
+# no arm = cde, draco, pantheon
 
 if [ "$1" = "pantheon" ]; then
 	if [ -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
@@ -444,14 +444,32 @@ elif [ "$1" = "trinity" ]; then
 			touch /etc/apt/sources.list.d/trinity.list
 
 			if [ "$SPARKYVERCHECK5" != "" ] || [ "$DEBIANVERCHECK10" != "" ]; then
-				$SPARKYXTERM "apt-key adv --keyserver keys.gnupg.net --recv-key A04BE668"
-				echo "deb http://mirror.xcer.cz/trinity-sb $TDEREPO deps-r14 main-r14" >> /etc/apt/sources.list.d/trinity.list
-				echo "deb-src http://mirror.xcer.cz/trinity-sb $TDEREPO deps-r14 main-r14" >> /etc/apt/sources.list.d/trinity.list
+				if [ -d /tmp/tmp-key ]; then
+					rm -rf /tmp/tmp-key
+				fi
+				mkdir /tmp/tmp-key
+				cd /tmp/tmp-key
+				$SPARKYXTERM "wget http://mirror.ppa.trinitydesktop.org/trinity/deb/trinity-keyring.deb"
+				$SPARKYXTERM "dpkg -i *.deb"
+				echo "deb http://mirror.ppa.trinitydesktop.org/trinity-sb $TDEREPO main" >> /etc/apt/sources.list.d/trinity.list
+				echo "deb-src http://mirror.ppa.trinitydesktop.org/trinity-sb $TDEREPO main" >> /etc/apt/sources.list.d/trinity.list
 			elif [ "$SPARKYVERCHECK4" != "" ] || [ "$DEBIANVERCHECK9" != "" ]; then
-				$SPARKYXTERM "apt-key adv --keyserver keys.gnupg.net --recv-key A04BE668"
-				echo "deb http://mirror.xcer.cz/trinity-sb $TDEREPO deps-r14 main-r14" >> /etc/apt/sources.list.d/trinity.list
-				echo "deb-src http://mirror.xcer.cz/trinity-sb $TDEREPO deps-r14 main-r14" >> /etc/apt/sources.list.d/trinity.list
-			fi	
+				#$SPARKYXTERM "apt-key adv --keyserver keys.gnupg.net --recv-key A04BE668"
+				if [ -d /tmp/tmp-key ]; then
+					rm -rf /tmp/tmp-key
+				fi
+				mkdir /tmp/tmp-key
+				cd /tmp/tmp-key
+				$SPARKYXTERM "wget http://mirror.ppa.trinitydesktop.org/trinity/deb/trinity-keyring.deb"
+				$SPARKYXTERM "dpkg -i *.deb"
+				echo "deb http://mirror.ppa.trinitydesktop.org/trinity/trinity-r14.0.0/debian $TDEREPO main" >> /etc/apt/sources.list.d/trinity.list
+				echo "deb http://mirror.ppa.trinitydesktop.org/trinity/trinity-builddeps-r14.0.0/debian $TDEREPO main" >> /etc/apt/sources.list.d/trinity.list
+				echo "deb-src http://mirror.ppa.trinitydesktop.org/trinity/trinity-r14.0.0/debian $TDEREPO main" >> /etc/apt/sources.list.d/trinity.list
+				echo "deb-src http://mirror.ppa.trinitydesktop.org/trinity/trinity-builddeps-r14.0.0/debian $TDEREPO main" >> /etc/apt/sources.list.d/trinity.list
+			fi
+			if [ -d /tmp/tmp-key ]; then
+				rm -rf /tmp/tmp-key
+			fi
 			$SPARKYXTERM "apt-get update"
 			$SPARKYXTERM "$INSTALL $INSPACKS"
 			$SPARKYXTERM "$INSTALL -f"
