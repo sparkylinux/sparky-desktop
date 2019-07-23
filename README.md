@@ -27,6 +27,7 @@ iputils-ping
 rsync
 sed
 sparky-desktop-data
+sparky-info
 sparky-remsu
 sparky-xterm (>= 0.2.0)
 yad

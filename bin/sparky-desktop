@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2019/07/10 by pavroo
+# last update 2019/07/23 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -84,15 +84,10 @@ fi
 # check connection
 PINGTEST=$(ping -c 1 debian.org | grep [0-9])
 
-# checking Debian stable 8 Jessie
-#OLDSTABLECHECK1="`cat /etc/issue | grep 8`"
-# checking Sparky 3 Annagerman based on Debian stable 8
-#OLDSTABLECHECK2="`cat /etc/issue | grep 3`"
-# checking Debian 9/10 and Sparky 4/5
-SPARKYVERCHECK5="`cat /etc/issue | grep 5`"
-SPARKYVERCHECK4="`cat /etc/issue | grep 4`"
-DEBIANVERCHECK10="`cat /etc/issue | grep buster`"
-DEBIANVERCHECK9="`cat /etc/issue | grep stretch`"
+# checking Sparky 4/5/6
+SPARKYVERCHECK6="`cat /etc/issue | grep Tolo`"
+SPARKYVERCHECK5="`cat /etc/issue | grep Nibiru`"
+SPARKYVERCHECK4="`cat /etc/issue | grep Tyche`"
 
 # recive desktop name
 case $1 in
@@ -140,7 +135,7 @@ case $1 in
 		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
 		exit 1
 	fi
-	if [ "$SPARKYVERCHECK4" != "" ] || [ "$DEBIANVERCHECK9" != "" ]; then
+	if [ "$SPARKYVERCHECK4" != "" ]; then
 		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
 		exit 1
 	fi
@@ -222,11 +217,7 @@ case $1 in
 	DESKTOP="Lumina"
 	WMAN="lumina-desktop"
 	INSPACKS="sparky-desktop-$PACKAGE"
-	#if [ -d /usr/share/doc/sparky-desktop-fluxbox ]; then
-		REMPACKS="sparky-desktop-$PACKAGE ^lumina*"
-	#else
-	#	REMPACKS="sparky-desktop-$PACKAGE ^lumina* fluxbox"
-	#fi
+	REMPACKS="sparky-desktop-$PACKAGE ^lumina*"
      ;;
   lxde)
 	PACKAGE="lxde"
@@ -310,9 +301,11 @@ case $1 in
      ;;
 esac
 
-if [ "$SPARKYVERCHECK5" != "" ] || [ "$DEBIANVERCHECK10" != "" ]; then
+if [ "$SPARKYVERCHECK6" != "" ]; then
+	TDEREPO="bullseye"
+elif [ "$SPARKYVERCHECK5" != "" ]; then
 	TDEREPO="buster"
-elif [ "$SPARKYVERCHECK4" != "" ] || [ "$DEBIANVERCHECK9" != "" ]; then
+elif [ "$SPARKYVERCHECK4" != "" ]; then
 	TDEREPO="stretch"
 else
 	TDEREPO="sid"
@@ -363,7 +356,7 @@ if [ "$1" = "pantheon" ]; then
 				NEWCONFIG="no"
 				exit 1
 			fi
-			if [ "$SPARKYVERCHECK5" != "" ] || [ "$DEBIANVERCHECK10" != "" ]; then
+			if [ "$SPARKYVERCHECK5" != "" ] || [ "$SPARKYVERCHECK6" != "" ]; then
 				if [ -f /etc/apt/sources.list.d/pantheon-debian.list ]; then
 					rm -f /etc/apt/sources.list.d/pantheon-debian.list
 				fi
@@ -372,7 +365,7 @@ if [ "$1" = "pantheon" ]; then
 				$SPARKYXTERM "apt-get update"
 				$SPARKYXTERM "$INSTALL $INSPACKS"
 				$SPARKYXTERM "$INSTALL -f"
-			elif [ "$SPARKYVERCHECK4" != "" ] || [ "$DEBIANVERCHECK9" != "" ]; then
+			elif [ "$SPARKYVERCHECK4" != "" ]; then
 				if [ -f /etc/apt/sources.list.d/pantheon-debian.list ]; then
 					rm -f /etc/apt/sources.list.d/pantheon-debian.list
 				fi
@@ -443,7 +436,7 @@ elif [ "$1" = "trinity" ]; then
 			fi
 			touch /etc/apt/sources.list.d/trinity.list
 
-			if [ "$SPARKYVERCHECK5" != "" ] || [ "$DEBIANVERCHECK10" != "" ]; then
+			if [ "$SPARKYVERCHECK5" != "" ] || [ "$SPARKYVERCHECK6" != "" ]; then
 				if [ -d /tmp/tmp-key ]; then
 					rm -rf /tmp/tmp-key
 				fi
@@ -453,7 +446,7 @@ elif [ "$1" = "trinity" ]; then
 				$SPARKYXTERM "dpkg -i *.deb"
 				echo "deb http://mirror.ppa.trinitydesktop.org/trinity-sb $TDEREPO main" >> /etc/apt/sources.list.d/trinity.list
 				echo "deb-src http://mirror.ppa.trinitydesktop.org/trinity-sb $TDEREPO main" >> /etc/apt/sources.list.d/trinity.list
-			elif [ "$SPARKYVERCHECK4" != "" ] || [ "$DEBIANVERCHECK9" != "" ]; then
+			elif [ "$SPARKYVERCHECK4" != "" ]; then
 				#$SPARKYXTERM "apt-key adv --keyserver keys.gnupg.net --recv-key A04BE668"
 				if [ -d /tmp/tmp-key ]; then
 					rm -rf /tmp/tmp-key
