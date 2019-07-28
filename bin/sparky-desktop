@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2019/07/28 by pavroo
+# last update 2019/07/28.1 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -1697,6 +1697,12 @@ elif [ "$1" = "openbox-arm" ]; then
 		fi
 		cp /usr/share/sparky-desktop-data/openbox-arm/skel/.config/QtProject.conf /home/$TARGETUSER/.config/QtProject.conf
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
+
+		if [ -f /etc/xdg/menus/sparky-pi.menu ]; then
+			rm -f /etc/xdg/menus/sparky-pi.menu
+		fi
+		cp /usr/share/sparky-desktop-data/openbox-arm/etc/sparky-pi.menu /etc/xdg/menus/sparky-pi.menu
+		chown -R root:root /etc/xdg/menus/sparky-pi.menu
 		DESKTOPCHECK="0"
 	else
 		DESKTOPCHECK="1"
