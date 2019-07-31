@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2019/07/28.1 by pavroo
+# last update 2019/07/31 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -264,6 +264,7 @@ case $1 in
 	REMPACKS="sparky-desktop-$PACKAGE ^openbox*"
 	DESKTOP="Openbox"
 	WMAN="openbox"
+     ;;
   pantheon)
 	if [ "$ARCHARM" != "" ]; then
 		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
