@@ -1,4 +1,4 @@
-# Hungarian localization file for Sparky Desktop Installer
+# Hungarian localization file for Sparky Desktop Installer. (Translated by Nemomen).
 # Copyright 2016 Pawel "pavroo" Pijanowski <pavroo@onet.eu> 2016/03/21
 # Under the GNU GPL v2
 # Last update 2018/04/21 by pavroo
@@ -27,7 +27,8 @@ LOCAL22="Ez el fogja távolítani az Ön által kiválasztott asztalt, amelyre N
 LOCAL23=" Ha minden rendben ment, az Ön asztala eltávolításra került az Ön rendszeréből.”
 LOCAL24="Ez az asztal harmadik féltől származó alkalmazás és sem a Debian, sem a Sparky fejlesztők NEM tartják karban, így lehetséges, hogy NEM fog megfelelően működni.”
 LOCAL25="Egyebek"
-LOCAL26="Az asztal csomagok különféle tárolókból (repo) telepítődnek.” LOCAL27="Eltávolítás"
+LOCAL26="Az asztal csomagok különféle tárolókból (repo) telepítődnek.”
+LOCAL27="Eltávolítás"
 LOCAL28="Újratelepítés"
 LOCAL29="Telepítés"
 LOCAL30="Ez a csomag már telepítve van."
