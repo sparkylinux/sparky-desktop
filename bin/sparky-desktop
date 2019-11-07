@@ -1,11 +1,13 @@
 #!/bin/bash
 
-# last update 2019/08/29 by pavroo
+# last update 2019/11/07 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
 if [ "`cat /etc/default/locale | grep de`" != "" ]; then
 . $DEFLOCDIR/de
+elif [ "`cat /etc/default/locale | grep el`" != "" ]; then
+. $DEFLOCDIR/el
 elif [ "`cat /etc/default/locale | grep es`" != "" ]; then
 . $DEFLOCDIR/es
 elif [ "`cat /etc/default/locale | grep fr`" != "" ]; then
@@ -950,14 +952,14 @@ elif [ "$1" = "gnomeshell" ]; then
 		mkdir -p /home/$TARGETUSER/.config/dconf
 		rsync -a /usr/share/sparky-desktop-data/gnome-sh/skel/.config/dconf /home/$TARGETUSER/.config/
 
-		CHECKDM=`cat /etc/X11/default-display-manager | grep gdm`
-		if [ "$CHECKDM" != "" ]; then
-			sed -i -e 's/gdm3/lightdm/g' /etc/X11/default-display-manager
-			if [ -f /usr/lib/systemd/system/lightdm.service ] && [ -f /etc/systemd/system/display-manager.service ]; then
-				rm -f /etc/systemd/system/display-manager.service
-				ln -s /lib/systemd/system/lightdm.service /etc/systemd/system/display-manager.service
-			fi
-		fi
+		#CHECKDM=`cat /etc/X11/default-display-manager | grep gdm`
+		#if [ "$CHECKDM" != "" ]; then
+		#	sed -i -e 's/gdm3/lightdm/g' /etc/X11/default-display-manager
+		#	if [ -f /usr/lib/systemd/system/lightdm.service ] && [ -f /etc/systemd/system/display-manager.service ]; then
+		#		rm -f /etc/systemd/system/display-manager.service
+		#		ln -s /lib/systemd/system/lightdm.service /etc/systemd/system/display-manager.service
+		#	fi
+		#fi
 
 		if [ -f /home/$TARGETUSER/.gtkrc-2.0 ]; then
 			rm -f /home/$TARGETUSER/.gtkrc-2.0
