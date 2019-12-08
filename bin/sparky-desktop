@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2019/11/07 by pavroo
+# last update 2019/12/08 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -89,9 +89,9 @@ fi
 PINGTEST=$(ping -c 1 debian.org | grep [0-9])
 
 # checking Sparky 4/5/6
-SPARKYVERCHECK6="`cat /etc/issue | grep Tolo`"
-SPARKYVERCHECK5="`cat /etc/issue | grep Nibiru`"
-SPARKYVERCHECK4="`cat /etc/issue | grep Tyche`"
+SPARKYVERCHECK6="`cat /etc/os-release | grep Tolo`"
+SPARKYVERCHECK5="`cat /etc/os-release | grep Nibiru`"
+SPARKYVERCHECK4="`cat /etc/os-release | grep Tyche`"
 
 # recive desktop name
 case $1 in
@@ -274,6 +274,10 @@ case $1 in
 		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
 		exit 1
 	fi
+	if [ "$SPARKYVERCHECK6" != "" ]; then
+		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
+		exit 1
+	fi
 	PACKAGE="pantheon"
 	DESKTOP="Pantheon"
 	WMAN="gala"
@@ -338,8 +342,9 @@ if [ "$1" = "pantheon" ]; then
 			$SPARKYXTERM "$AUTOREMOVE"
 			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
 				NEWCONFIG="no"
-				rm -f /etc/apt/sources.list.d/pantheon-debian.list
-				rm -f /etc/apt/sources.list.d/appcenter.list
+				#rm -f /etc/apt/sources.list.d/pantheon-debian.list
+				#rm -f /etc/apt/sources.list.d/appcenter.list
+				$SPARKYXTERM "apt purge pantheon-debian-repos -y"
 				$SPARKYXTERM "apt-get update"
 				$DIALOG $TEXT"\n$LOCAL23" $TITLE"$LOCAL15" $OKBUTTON
 				exit 1
@@ -365,21 +370,27 @@ if [ "$1" = "pantheon" ]; then
 				NEWCONFIG="no"
 				exit 1
 			fi
+			# sparky 4 only
 			if [ "$SPARKYVERCHECK5" != "" ] || [ "$SPARKYVERCHECK6" != "" ]; then
-				if [ -f /etc/apt/sources.list.d/pantheon-debian.list ]; then
-					rm -f /etc/apt/sources.list.d/pantheon-debian.list
-				fi
-				echo "deb http://gandalfn.ovh/debian testing-daily main contrib" > /etc/apt/sources.list.d/pantheon-debian.list
+				#if [ -f /etc/apt/sources.list.d/pantheon-debian.list ]; then
+				#	rm -f /etc/apt/sources.list.d/pantheon-debian.list
+				#fi
+				#echo "deb http://gandalfn.ovh/debian stretch-loki main contrib" > /etc/apt/sources.list.d/pantheon-debian.list
 				$SPARKYXTERM "wget http://gandalfn.ovh/debian/pantheon-debian.gpg.key -O- | apt-key add -"
+				$SPARKYXTERM "apt-get update"
+				$SPARKYXTERM "apt-get install apt-transport-https software-properties-common pantheon-debian-repos -y"
 				$SPARKYXTERM "apt-get update"
 				$SPARKYXTERM "$INSTALL $INSPACKS"
 				$SPARKYXTERM "$INSTALL -f"
+			# sparky 5 & 6
 			elif [ "$SPARKYVERCHECK4" != "" ]; then
-				if [ -f /etc/apt/sources.list.d/pantheon-debian.list ]; then
-					rm -f /etc/apt/sources.list.d/pantheon-debian.list
-				fi
-				echo "deb http://gandalfn.ovh/debian stretch-loki main contrib" > /etc/apt/sources.list.d/pantheon-debian.list
+				#if [ -f /etc/apt/sources.list.d/pantheon-debian.list ]; then
+				#	rm -f /etc/apt/sources.list.d/pantheon-debian.list
+				#fi
+				#echo "deb http://gandalfn.ovh/debian buster-juno main contrib os-patches" > /etc/apt/sources.list.d/pantheon-debian.list
 				$SPARKYXTERM "wget http://gandalfn.ovh/debian/pantheon-debian.gpg.key -O- | apt-key add -"
+				$SPARKYXTERM "apt-get update"
+				$SPARKYXTERM "apt-get install software-properties-common pantheon-debian-repos -y"
 				$SPARKYXTERM "apt-get update"
 				$SPARKYXTERM "$INSTALL $INSPACKS"
 				$SPARKYXTERM "$INSTALL -f"
@@ -440,38 +451,41 @@ elif [ "$1" = "trinity" ]; then
 				NEWCONFIG="no"
 				exit 1
 			fi
-			if [ -f /etc/apt/sources.list.d/trinity.list ]; then
-				rm -f /etc/apt/sources.list.d/trinity.list
-			fi
-			touch /etc/apt/sources.list.d/trinity.list
-
-			if [ "$SPARKYVERCHECK5" != "" ] || [ "$SPARKYVERCHECK6" != "" ]; then
-				if [ -d /tmp/tmp-key ]; then
-					rm -rf /tmp/tmp-key
-				fi
-				mkdir /tmp/tmp-key
-				cd /tmp/tmp-key
-				$SPARKYXTERM "wget http://mirror.ppa.trinitydesktop.org/trinity/deb/trinity-keyring.deb"
-				$SPARKYXTERM "dpkg -i *.deb"
-				echo "deb http://mirror.ppa.trinitydesktop.org/trinity-sb $TDEREPO main" >> /etc/apt/sources.list.d/trinity.list
-				echo "deb-src http://mirror.ppa.trinitydesktop.org/trinity-sb $TDEREPO main" >> /etc/apt/sources.list.d/trinity.list
-			elif [ "$SPARKYVERCHECK4" != "" ]; then
-				#$SPARKYXTERM "apt-key adv --keyserver keys.gnupg.net --recv-key A04BE668"
-				if [ -d /tmp/tmp-key ]; then
-					rm -rf /tmp/tmp-key
-				fi
-				mkdir /tmp/tmp-key
-				cd /tmp/tmp-key
-				$SPARKYXTERM "wget http://mirror.ppa.trinitydesktop.org/trinity/deb/trinity-keyring.deb"
-				$SPARKYXTERM "dpkg -i *.deb"
-				echo "deb http://mirror.ppa.trinitydesktop.org/trinity/trinity-r14.0.0/debian $TDEREPO main" >> /etc/apt/sources.list.d/trinity.list
-				echo "deb http://mirror.ppa.trinitydesktop.org/trinity/trinity-builddeps-r14.0.0/debian $TDEREPO main" >> /etc/apt/sources.list.d/trinity.list
-				echo "deb-src http://mirror.ppa.trinitydesktop.org/trinity/trinity-r14.0.0/debian $TDEREPO main" >> /etc/apt/sources.list.d/trinity.list
-				echo "deb-src http://mirror.ppa.trinitydesktop.org/trinity/trinity-builddeps-r14.0.0/debian $TDEREPO main" >> /etc/apt/sources.list.d/trinity.list
-			fi
-			if [ -d /tmp/tmp-key ]; then
-				rm -rf /tmp/tmp-key
-			fi
+			#if [ -f /etc/apt/sources.list.d/trinity.list ]; then
+			#	rm -f /etc/apt/sources.list.d/trinity.list
+			#fi
+			#touch /etc/apt/sources.list.d/trinity.list
+			
+			#if [ "$SPARKYVERCHECK5" != "" ] || [ "$SPARKYVERCHECK6" != "" ]; then
+				#if [ -d /tmp/tmp-key ]; then
+				#	rm -rf /tmp/tmp-key
+				#fi
+				#mkdir /tmp/tmp-key
+				#cd /tmp/tmp-key
+				#$SPARKYXTERM "wget http://mirror.ppa.trinitydesktop.org/trinity/deb/trinity-keyring.deb"
+				#$SPARKYXTERM "dpkg -i *.deb"
+				$SPARKYXTERM "apt-get update"
+				$SPARKYXTERM "apt-get install trinity-keyring -y"
+				echo "deb http://mirror.ppa.trinitydesktop.org/trinity/deb/trinity-sb $TDEREPO deps-r14 main-r14" >> /etc/apt/sources.list.d/trinity.list
+				echo "deb-src http://mirror.ppa.trinitydesktop.org/trinity/deb/trinity-sb $TDEREPO deps-r14 main-r14" >> /etc/apt/sources.list.d/trinity.list
+			
+			#elif [ "$SPARKYVERCHECK4" != "" ]; then
+			#	#$SPARKYXTERM "apt-key adv --keyserver keys.gnupg.net --recv-key A04BE668"
+			#	if [ -d /tmp/tmp-key ]; then
+			#		rm -rf /tmp/tmp-key
+			#	fi
+			#	mkdir /tmp/tmp-key
+			#	cd /tmp/tmp-key
+			#	$SPARKYXTERM "wget http://mirror.ppa.trinitydesktop.org/trinity/deb/trinity-keyring.deb"
+			#	$SPARKYXTERM "dpkg -i *.deb"
+			#	echo "deb http://mirror.ppa.trinitydesktop.org/trinity/trinity-r14.0.0/debian $TDEREPO main" >> /etc/apt/sources.list.d/trinity.list
+			#	echo "deb http://mirror.ppa.trinitydesktop.org/trinity/trinity-builddeps-r14.0.0/debian $TDEREPO main" >> /etc/apt/sources.list.d/trinity.list
+			#	echo "deb-src http://mirror.ppa.trinitydesktop.org/trinity/trinity-r14.0.0/debian $TDEREPO main" >> /etc/apt/sources.list.d/trinity.list
+			#	echo "deb-src http://mirror.ppa.trinitydesktop.org/trinity/trinity-builddeps-r14.0.0/debian $TDEREPO main" >> /etc/apt/sources.list.d/trinity.list
+			#fi
+			#if [ -d /tmp/tmp-key ]; then
+			#	rm -rf /tmp/tmp-key
+			#fi
 			$SPARKYXTERM "apt-get update"
 			$SPARKYXTERM "$INSTALL $INSPACKS"
 			$SPARKYXTERM "$INSTALL -f"
