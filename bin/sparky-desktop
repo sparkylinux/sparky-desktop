@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2019/12/08 by pavroo
+# last update 2019/12/09 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -378,11 +378,14 @@ if [ "$1" = "pantheon" ]; then
 				#echo "deb http://gandalfn.ovh/debian stretch-loki main contrib" > /etc/apt/sources.list.d/pantheon-debian.list
 				$SPARKYXTERM "wget http://gandalfn.ovh/debian/pantheon-debian.gpg.key -O- | apt-key add -"
 				$SPARKYXTERM "apt-get update"
-				$SPARKYXTERM "apt-get install apt-transport-https software-properties-common pantheon-debian-repos -y"
+				$SPARKYXTERM "$INSTALL apt-transport-https software-properties-common pantheon-debian-repos -y"
 				$SPARKYXTERM "apt-get update"
 				$SPARKYXTERM "$INSTALL $INSPACKS"
 				$SPARKYXTERM "$INSTALL -f"
-			# sparky 5 & 6
+				if [ -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
+					$SPARKYXTERM "$INSTALL sparky-theme-sddm --no-install-recommends -y"
+				fi
+			# sparky 5 & 6 (doesn't work on 6 testing)
 			elif [ "$SPARKYVERCHECK4" != "" ]; then
 				#if [ -f /etc/apt/sources.list.d/pantheon-debian.list ]; then
 				#	rm -f /etc/apt/sources.list.d/pantheon-debian.list
@@ -390,10 +393,13 @@ if [ "$1" = "pantheon" ]; then
 				#echo "deb http://gandalfn.ovh/debian buster-juno main contrib os-patches" > /etc/apt/sources.list.d/pantheon-debian.list
 				$SPARKYXTERM "wget http://gandalfn.ovh/debian/pantheon-debian.gpg.key -O- | apt-key add -"
 				$SPARKYXTERM "apt-get update"
-				$SPARKYXTERM "apt-get install software-properties-common pantheon-debian-repos -y"
+				$SPARKYXTERM "$INSTALL software-properties-common pantheon-debian-repos -y"
 				$SPARKYXTERM "apt-get update"
 				$SPARKYXTERM "$INSTALL $INSPACKS"
 				$SPARKYXTERM "$INSTALL -f"
+				if [ -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
+					$SPARKYXTERM "$INSTALL sparky-theme-sddm --no-install-recommends -y"
+				fi
 			fi
 
 			if [ ! -f /usr/share/doc/sparky-desktop-$PACKAGE/copyright ]; then
@@ -1774,14 +1780,14 @@ elif [ "$1" = "pantheon" ]; then
 		fi
 		cp /usr/share/sparky-desktop-data/pantheon/skel/.config/Trolltech.conf /home/$TARGETUSER/.config/Trolltech.conf
 		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
-		
+		# force change lightdm to sddm (slim works fine too)
 		CHECKDM=`cat /etc/X11/default-display-manager | grep lightdm`
 		if [ "$CHECKDM" != "" ]; then
-			sed -i -e 's/lightdm/slim/g' /etc/X11/default-display-manager
+			sed -i -e 's/lightdm/sddm/g' /etc/X11/default-display-manager
 			sed -i -e 's/sbin/bin/g' /etc/X11/default-display-manager
-			if [ -f /lib/systemd/system/slim.service ] && [ -f /etc/systemd/system/display-manager.service ]; then
+			if [ -f /lib/systemd/system/sddm.service ] && [ -f /etc/systemd/system/display-manager.service ]; then
 				rm -f /etc/systemd/system/display-manager.service
-				ln -s /lib/systemd/system/slim.service /etc/systemd/system/display-manager.service
+				ln -s /lib/systemd/system/sddm.service /etc/systemd/system/display-manager.service
 			fi
 		fi
 		DESKTOPCHECK="0"
