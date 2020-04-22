@@ -28,8 +28,6 @@ elif [ "`cat /etc/default/locale | grep pt_PT`" != "" ]; then
 . $DEFLOCDIR/pt_PT
 elif [ "`cat /etc/default/locale | grep ru`" != "" ]; then
 . $DEFLOCDIR/ru
-elif [ "`cat /etc/default/locale | grep zh_CN`" != "" ]; then
-. $DEFLOCDIR/zh_CN
 else
 . $DEFLOCDIR/en
 fi
