@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=awesome
+Comment=Awesome Window Manager
+Exec=remsu /usr/bin/sparky-desktop awesome
+Icon=/usr/share/icons/sparky/desktops/awesome.png
+Terminal=false
+MultipleArgs=false
+Type=Application
+Categories=System;

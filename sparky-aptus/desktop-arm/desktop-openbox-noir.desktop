@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Openbox Noir
+Comment=Noir version of Openbox Window Manager
+Exec=remsu /usr/bin/sparky-desktop openbox-noir
+Icon=/usr/share/icons/sparky/desktops/openbox-noir.png
+Terminal=false
+MultipleArgs=false
+Type=Application
+Categories=System;

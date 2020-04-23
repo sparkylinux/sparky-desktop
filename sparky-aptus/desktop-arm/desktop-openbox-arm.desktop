@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Openbox
+Comment=Openbox Window Manager
+Exec=remsu /usr/bin/sparky-desktop openbox-arm
+Icon=/usr/share/icons/sparky/desktops/openbox.png
+Terminal=false
+MultipleArgs=false
+Type=Application
+Categories=System;
