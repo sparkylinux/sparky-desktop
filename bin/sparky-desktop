@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2020/04/23 by pavroo
+# last update 2020/04/24 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -240,7 +240,7 @@ case $1 in
 	REMPACKS="sparky-desktop-$PACKAGE ^lxqt*"
      ;;
   manokwari)
-	if [ "$SPARKYVERCHECK6" != "" ]; then
+	if [ "$SPARKYVERCHECK5" = "" ] || [ "$SPARKYVERCHECK4" = "" ]; then
 		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
 		exit 1
 	fi
@@ -262,7 +262,7 @@ case $1 in
 	if [ "$SPARKYVERCHECK5" != "" ] || [ "$SPARKYVERCHECK4" != "" ]; then
 		INSPACKS="sparky-desktop-$PACKAGE obmenu-generator"
 	else
-		INSPACKS="sparky-desktop-$PACKAGE sparky-obmenu"
+		INSPACKS="sparky-desktop-$PACKAGE jgmenu"
 	fi
 	REMPACKS="sparky-desktop-$PACKAGE ^openbox*"
 	DESKTOP="Openbox"
@@ -280,7 +280,7 @@ case $1 in
 	if [ "$SPARKYVERCHECK5" != "" ] || [ "$SPARKYVERCHECK4" != "" ]; then
 		INSPACKS="sparky-desktop-$PACKAGE obmenu-generator"
 	else
-		INSPACKS="sparky-desktop-$PACKAGE sparky-obmenu"
+		INSPACKS="sparky-desktop-$PACKAGE jgmenu"
 	fi
 	REMPACKS="sparky-desktop-$PACKAGE ^openbox*"
 	DESKTOP="Openbox Noir"
@@ -291,7 +291,7 @@ case $1 in
 		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
 		exit 1
 	fi
-	if [ "$SPARKYVERCHECK6" != "" ]; then
+	if [ "$SPARKYVERCHECK5" = "" ] || [ "$SPARKYVERCHECK4" = "" ]; then
 		$DIALOG $TEXT"\n$LOCAL14" $TITLE"$LOCAL6" $OKBUTTON
 		exit 1
 	fi
@@ -1849,7 +1849,7 @@ elif [ "$1" = "openbox-noir" ]; then
 			rm -rf /home/$TARGETUSER/.config/tint2
 		fi
 		mkdir -p /home/$TARGETUSER/.config/tint2
-		rsync -a /usr/share/sparky-desktop-data/openbox/skel/.config/tint2 /home/$TARGETUSER/.config/
+		rsync -a /usr/share/sparky-desktop-data/openbox-noir/skel/.config/tint2 /home/$TARGETUSER/.config/
 		
 		if [ -f /home/$TARGETUSER/.config/xfce4/xfconf/xfce-perchannel-xml/thunar-volman.xml ]; then
 			rm -f /home/$TARGETUSER/.config/xfce4/xfconf/xfce-perchannel-xml/thunar-volman.xml
@@ -1876,10 +1876,7 @@ elif [ "$1" = "openbox-noir" ]; then
 		fi
 		cp /usr/share/sparky-desktop-data/openbox-noir/skel/.config/Trolltech.conf /home/$TARGETUSER/.config/Trolltech.conf
 
-		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config
-		
-		cat /usr/share/sparky-desktop-data/openbox-noir/plank/docks.ini | dconf load /net/launchpad/plank/docks/
-		
+		chown -R $TARGETUSER:$TARGETUSER /home/$TARGETUSER/.config		
 		DESKTOPCHECK="0"
 	else
 		DESKTOPCHECK="1"
