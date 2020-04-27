@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2020/04/25 by pavroo
+# last update 2020/04/27 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -1844,6 +1844,12 @@ elif [ "$1" = "openbox-noir" ]; then
 		fi
 		mkdir -p /home/$TARGETUSER/.config/picom
 		rsync -a /usr/share/sparky-desktop-data/openbox-noir/skel/.config/picom /home/$TARGETUSER/.config/
+
+		if [ -d /home/$TARGETUSER/.config/plank ]; then
+			rm -rf /home/$TARGETUSER/.config/plank
+		fi
+		mkdir -p /home/$TARGETUSER/.config/plank
+		rsync -a /usr/share/sparky-desktop-data/openbox-noir/skel/.config/plank /home/$TARGETUSER/.config/
 		
 		if [ -f /home/$TARGETUSER/.config/pnmixer/config ]; then
 			rm -f /home/$TARGETUSER/.config/pnmixer/config
@@ -1852,7 +1858,13 @@ elif [ "$1" = "openbox-noir" ]; then
 			mkdir -p /home/$TARGETUSER/.config/pnmixer
 		fi
 		cp /usr/share/sparky-desktop-data/openbox-noir/skel/.config/pnmixer/config /home/$TARGETUSER/.config/pnmixer/
-		
+
+		if [ -d /home/$TARGETUSER/.config/qt5ct ]; then
+			rm -rf /home/$TARGETUSER/.config/qt5ct
+		fi
+		mkdir -p /home/$TARGETUSER/.config/qt5ct
+		rsync -a /usr/share/sparky-desktop-data/openbox-noir/skel/.config/qt5ct /home/$TARGETUSER/.config/
+
 		if [ -d /home/$TARGETUSER/.config/rofi ]; then
 			rm -rf /home/$TARGETUSER/.config/rofi
 		fi
