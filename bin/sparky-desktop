@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2020/04/27 by pavroo
+# last update 2020/05/01 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -1806,14 +1806,14 @@ elif [ "$1" = "openbox-noir" ]; then
 		mkdir -p /home/$TARGETUSER/.config/lxterminal
 		rsync -a /usr/share/sparky-desktop-data/openbox-noir/skel/.config/lxterminal /home/$TARGETUSER/.config/
 		
-		if [ -f /home/$TARGETUSER/.config/menus/lxde-applications.menu ]; then
-			rm -f /home/$TARGETUSER/.config/menus/lxde-applications.menu
-		fi
+		#if [ -f /home/$TARGETUSER/.config/menus/lxde-applications.menu ]; then
+		#	rm -f /home/$TARGETUSER/.config/menus/lxde-applications.menu
+		#fi
 		
-		if [ ! -d /home/$TARGETUSER/.config/menus ]; then
-			mkdir -p /home/$TARGETUSER/.config/menus
-		fi
-		cp /usr/share/sparky-desktop-data/openbox-noir/skel/.config/menus/lxde-applications.menu /home/$TARGETUSER/.config/menus/
+		#if [ ! -d /home/$TARGETUSER/.config/menus ]; then
+		#	mkdir -p /home/$TARGETUSER/.config/menus
+		#fi
+		#cp /usr/share/sparky-desktop-data/openbox-noir/skel/.config/menus/lxde-applications.menu /home/$TARGETUSER/.config/menus/
 		
 		if [ -d /home/$TARGETUSER/.config/nitrogen ]; then
 			rm -rf /home/$TARGETUSER/.config/nitrogen
@@ -1827,11 +1827,11 @@ elif [ "$1" = "openbox-noir" ]; then
 		mkdir -p /home/$TARGETUSER/.config/openbox
 		rsync -a /usr/share/sparky-desktop-data/openbox-noir/skel/.config/openbox /home/$TARGETUSER/.config/
 
-		if [ -d /home/$TARGETUSER/.config/otter ]; then
-			rm -rf /home/$TARGETUSER/.config/otter
-		fi
-		mkdir -p /home/$TARGETUSER/.config/otter
-		rsync -a /usr/share/sparky-desktop-data/openbox-noir/skel/.config/otter /home/$TARGETUSER/.config/
+		#if [ -d /home/$TARGETUSER/.config/otter ]; then
+		#	rm -rf /home/$TARGETUSER/.config/otter
+		#fi
+		#mkdir -p /home/$TARGETUSER/.config/otter
+		#rsync -a /usr/share/sparky-desktop-data/openbox-noir/skel/.config/otter /home/$TARGETUSER/.config/
 		
 		if [ -d /home/$TARGETUSER/.config/pcmanfm ]; then
 			rm -rf /home/$TARGETUSER/.config/pcmanfm
@@ -1859,11 +1859,11 @@ elif [ "$1" = "openbox-noir" ]; then
 		fi
 		cp /usr/share/sparky-desktop-data/openbox-noir/skel/.config/pnmixer/config /home/$TARGETUSER/.config/pnmixer/
 
-		if [ -d /home/$TARGETUSER/.config/qt5ct ]; then
-			rm -rf /home/$TARGETUSER/.config/qt5ct
-		fi
-		mkdir -p /home/$TARGETUSER/.config/qt5ct
-		rsync -a /usr/share/sparky-desktop-data/openbox-noir/skel/.config/qt5ct /home/$TARGETUSER/.config/
+		#if [ -d /home/$TARGETUSER/.config/qt5ct ]; then
+		#	rm -rf /home/$TARGETUSER/.config/qt5ct
+		#fi
+		#mkdir -p /home/$TARGETUSER/.config/qt5ct
+		#rsync -a /usr/share/sparky-desktop-data/openbox-noir/skel/.config/qt5ct /home/$TARGETUSER/.config/
 
 		if [ -d /home/$TARGETUSER/.config/rofi ]; then
 			rm -rf /home/$TARGETUSER/.config/rofi
