@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2020/05/01 by pavroo
+# last update 2020/05/18 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -277,7 +277,7 @@ case $1 in
      ;;
   openbox-noir)
 	PACKAGE="openbox-noir"
-	if [ "$SPARKYVERCHECK5" != "" ] || [ "$SPARKYVERCHECK4" != "" ]; then
+	if [ "$SPARKYVERCHECK4" != "" ]; then
 		INSPACKS="sparky-desktop-$PACKAGE obmenu-generator"
 	else
 		INSPACKS="sparky-desktop-$PACKAGE jgmenu"
