@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=CDE
+Comment=Common Desktop Environment
+Exec=remsu /usr/bin/sparky-desktop cde
+Icon=/usr/share/icons/sparky/desktops/cde.png
+Terminal=false
+MultipleArgs=false
+Type=Application
+Categories=System;

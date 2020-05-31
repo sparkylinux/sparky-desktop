@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Draco
+Comment=Draco Desktop 
+Exec=remsu /usr/bin/sparky-desktop draco
+Icon=user-desktop
+Terminal=false
+MultipleArgs=false
+Type=Application
+Categories=System;

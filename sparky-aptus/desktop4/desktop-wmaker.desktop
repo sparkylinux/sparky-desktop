@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Window Maker
+Comment=WMaker Window Manager
+Exec=remsu /usr/bin/sparky-desktop wmaker
+Icon=/usr/share/icons/sparky/desktops/wmaker.png
+Terminal=false
+MultipleArgs=false
+Type=Application
+Categories=System;
