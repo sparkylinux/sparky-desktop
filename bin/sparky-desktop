@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2020/07/03 by pavroo
+# last update 2020/07/19 by lami07
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -643,11 +643,11 @@ elif [ "$1" = "bspwm" ]; then
 		mkdir -p /home/$TARGETUSER/.config/sxhkd
 		rsync -a /usr/share/sparky-desktop-data/bspwm/skel/.config/sxhkd /home/$TARGETUSER/.config/
 
-		if [ -d /home/$TARGETUSER/.config/kupfer ]; then
-			rm -rf /home/$TARGETUSER/.config/kupfer
+		if [ -d /home/$TARGETUSER/.config/rofi ]; then
+			rm -rf /home/$TARGETUSER/.config/rofi
 		fi
-		mkdir -p /home/$TARGETUSER/.config/kupfer
-		rsync -a /usr/share/sparky-desktop-data/bspwm/skel/.config/kupfer /home/$TARGETUSER/.config/
+		mkdir -p /home/$TARGETUSER/.config/rofi
+		rsync -a /usr/share/sparky-desktop-data/bspwm/skel/.config/rofi /home/$TARGETUSER/.config/
 
 		if [ -f /home/$TARGETUSER/.Xresources ]; then
 			rm -f /home/$TARGETUSER/.Xresources
