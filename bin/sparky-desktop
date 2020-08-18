@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2020/07/19 by lami07
+# last update 2020/08/18 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -339,13 +339,15 @@ case $1 in
 esac
 
 if [ "$SPARKYVERCHECK6" != "" ]; then
-	TDEREPO="bullseye"
+	TDEREPO="trinity-testing bullseye deps main"
 elif [ "$SPARKYVERCHECK5" != "" ]; then
-	TDEREPO="buster"
+	TDEREPO="trinity-sb buster deps-r14 main-r14"
 elif [ "$SPARKYVERCHECK4" != "" ]; then
-	TDEREPO="stretch"
+	TDEREPO="trinity-sb stretch deps-r14 main-r14"
 else
-	TDEREPO="sid"
+	#TDEREPO="sid"
+	echo "not supported... exiting..."
+	exit 1
 fi
 
 # install, reinstall or remove a desktop now
@@ -473,8 +475,8 @@ elif [ "$1" = "trinity" ]; then
 			fi
 			$SPARKYXTERM "apt-get update"
 			$SPARKYXTERM "apt-get install trinity-keyring -y"
-			echo "deb http://mirror.ppa.trinitydesktop.org/trinity/deb/trinity-sb $TDEREPO deps-r14 main-r14" >> /etc/apt/sources.list.d/trinity.list
-			echo "deb-src http://mirror.ppa.trinitydesktop.org/trinity/deb/trinity-sb $TDEREPO deps-r14 main-r14" >> /etc/apt/sources.list.d/trinity.list
+			echo "deb http://mirror.ppa.trinitydesktop.org/trinity/deb/$TDEREPO" >> /etc/apt/sources.list.d/trinity.list
+			echo "deb-src http://mirror.ppa.trinitydesktop.org/trinity/deb/$TDEREPO" >> /etc/apt/sources.list.d/trinity.list
 			$SPARKYXTERM "apt-get update"
 			$SPARKYXTERM "$INSTALL $INSPACKS"
 			$SPARKYXTERM "$INSTALL -f"
