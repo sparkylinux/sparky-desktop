@@ -2079,10 +2079,6 @@ elif [ "$1" = "trinity" ]; then
 
 elif [ "$1" = "ukui" ]; then
 	if [ -d /usr/share/doc/sparky-desktop-ukui ]; then
-		if [ -f /usr/bin/gsettings ]; then
-			sudo -u $TARGETUSER dconf-launch gsettings set org.mate.background picture-filename /opt/artwork/sparky-desktop.png
-			echo "gsettings set sparky-desktop.png as a default wallpaper for UKUI desktop"
-		fi
 		echo "installation ukui desktop ok, no extra files to be installed"
 		DESKTOPCHECK="0"
 	else

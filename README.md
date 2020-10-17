@@ -36,7 +36,6 @@ yad
 Recommends:
 -------------
 sparky-aptus
-libglib2.0-bin
 
 Install:
 -------------
