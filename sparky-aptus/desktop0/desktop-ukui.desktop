@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=UKUI
+Comment=UKUI Desktop Environment 
+Exec=remsu /usr/bin/sparky-desktop ukui
+Icon=application-default-icon
+Terminal=false
+MultipleArgs=false
+Type=Application
+Categories=System;
