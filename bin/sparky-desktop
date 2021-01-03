@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# last update 2020/10/17 by pavroo
+# last update 2021/01/03 by pavroo
 
 # get default's locale file
 DEFLOCDIR="/usr/share/sparky/sparky-desktop"
@@ -1318,10 +1318,10 @@ elif [ "$1" = "kde" ]; then
 		fi
 		cp /usr/share/sparky-desktop-data/kde/skel/.config/startupconfig /home/$TARGETUSER/.config/startupconfig
 
-		if [ -f /home/$TARGETUSER/.config/startupconfigfiles ]; then
-			rm -r /home/$TARGETUSER/.config/startupconfigfiles
-		fi
-		cp /usr/share/sparky-desktop-data/kde/skel/.config/startupconfigfiles /home/$TARGETUSER/.config/startupconfigfiles
+		#if [ -f /home/$TARGETUSER/.config/startupconfigfiles ]; then
+		#	rm -r /home/$TARGETUSER/.config/startupconfigfiles
+		#fi
+		#cp /usr/share/sparky-desktop-data/kde/skel/.config/startupconfigfiles /home/$TARGETUSER/.config/startupconfigfiles
 
 		if [ -f /home/$TARGETUSER/.config/startupconfigkeys ]; then
 			rm -f /home/$TARGETUSER/.config/startupconfigkeys
@@ -1484,7 +1484,7 @@ elif [ "$1" = "lxqt" ]; then
 		if [ ! -d /home/$TARGETUSER/.config/openbox ]; then
 			mkdir -p /home/$TARGETUSER/.config/openbox
 		fi
-		cp /usr/share/sparky-desktop-data/lxqt/skel/.config/openbox/rc.xml /home/$TARGETUSER/.config/openbox/rc.xml
+		#cp /usr/share/sparky-desktop-data/lxqt/skel/.config/openbox/rc.xml /home/$TARGETUSER/.config/openbox/rc.xml
 		cp /usr/share/sparky-desktop-data/lxqt/skel/.config/openbox/lxqt-rc.xml /home/$TARGETUSER/.config/openbox/lxqt-rc.xml
 		
 		if [ -d /home/$TARGETUSER/.config/pcmanfm-qt ]; then
